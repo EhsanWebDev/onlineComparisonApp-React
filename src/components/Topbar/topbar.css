@@ -1,0 +1,10 @@
+.topbar-container ul{
+    margin-top: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+}
+.topbar-container ul li{
+    margin-left: 1.5em;
+}

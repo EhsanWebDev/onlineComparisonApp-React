@@ -1,0 +1,5 @@
+.input-container input{
+padding: .6em;
+outline: none;
+min-width: 350px;
+}

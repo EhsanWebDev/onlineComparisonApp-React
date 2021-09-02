@@ -1,0 +1,17 @@
+.sidebar{
+position: sticky;
+  top: 20px;
+  flex: 0.25;
+  height: fit-content;
+}
+
+.sidebar ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em 0.1em 1em 0;
+    border-bottom: 1px solid rebeccapurple;
+}
+.sidebar ul li a{text-transform: uppercase;}
+
+.sidebar .sidebar-icon{color: #777;}
