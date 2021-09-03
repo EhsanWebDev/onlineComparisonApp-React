@@ -1,59 +1,61 @@
-.main-content{
-    display: flex;
-    margin: 1em 2em;
+.main-content {
+  display: flex;
+  margin: 1em 2em;
 }
-.content{
-    flex:0.75;
-    padding-top: 0.7em;
-    margin-left: 1em;
+.content {
+  flex: 0.75;
+  padding-top: 0.7em;
+  margin-left: 1em;
 }
-.hero-img-container{height: 400px;}
+.hero-img-container {
+  height: 400px;
+}
 .hero-img-container img {
-    width: 100%;
-    object-fit: cover;
-    height: 90%;
-    border-bottom-right-radius: 20px;
+  width: 100%;
+  object-fit: cover;
+  height: 90%;
+  border-bottom-right-radius: 20px;
 }
-.content-grid{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 1em;
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1em;
 }
-.content-product{
-    /* max-width: 320px; */
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: white;
-    border-radius: 4px;
-    padding: 0 1px 1em;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-   
+.content-product {
+  /* max-width: 320px; */
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 4px;
+  padding: 0 1px 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  cursor: pointer;
 }
-.product-info{
-    margin-top: 1.2em;
+.product-info {
+  margin-top: 1.2em;
 }
 .content-product img {
- width: 100%;
+  width: 100%;
   height: auto;
 }
-.product-name{
-    font-weight: 300;
-    margin-bottom: 8px;
+.product-name {
+  font-weight: 300;
+  margin-bottom: 8px;
 }
-.product-price{
-    color: rgb(173, 3, 3);
-    font-weight: 500;
-    margin-bottom: 8px;
+.product-price {
+  color: rgb(173, 3, 3);
+  font-weight: 500;
+  margin-bottom: 8px;
 }
-.product-brand{
-    background-color: rgb(89, 89, 241);
-    color: white;
-    display: inline-block;
-    margin-bottom: 1em;
-    font-size: .75rem;
-    border-radius: 12px;
-    padding: 6px;
+.product-brand {
+  background-color: rgb(89, 89, 241);
+  color: white;
+  display: inline-block;
+  margin-bottom: 1em;
+  font-size: 0.75rem;
+  border-radius: 12px;
+  padding: 6px;
 }

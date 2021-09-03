@@ -1,10 +1,18 @@
-.topbar-container ul{
-    margin-top: 3em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    list-style: none;
+.topbar-container ul {
+  margin-top: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
 }
-.topbar-container ul li{
-    margin-left: 1.5em;
+.topbar-container ul li {
+  margin-left: 1.5em;
+  transition: all 0.5s ease-out;
+}
+
+.topbar-container ul li:hover {
+  color: rgb(173, 3, 3);
+  padding-right: 0.5em;
+  border-right: 1px solid rgb(173, 3, 3);
+  font-weight: 500;
 }

@@ -1,23 +1,23 @@
 .btn {
-    padding: .8em 1.2em;
-    outline: none;
-    border: none;
-    font-family: inherit;
-    
+  padding: 0.85em 1.2em;
+  outline: none;
+  border: none;
+  font-family: inherit;
 }
-.btn-primary{
-    background-color: rgb(173, 3, 3);
-    color: white;
+.btn-primary {
+  background-color: rgb(173, 3, 3);
+  color: white;
 }
-.btn-outline{
-    background-color: white;
-    color: #777;
-    border: 2px solid #ddd;
-    padding: .8em 2.4em;
-    text-transform: uppercase;
-    transition: .8s;
+.btn-outline {
+  background-color: white;
+  color: #777;
+  border: 2px solid #ddd;
+  padding: 0.8em 2.4em;
+  text-transform: uppercase;
+  transition: 0.8s;
 }
-.btn-outline:hover{
-     background-color: rgb(173, 3, 3);
-    color: white;
+.btn-outline:hover {
+  background-color: rgb(173, 3, 3);
+  color: white;
+  cursor: pointer;
 }

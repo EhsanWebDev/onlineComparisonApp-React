@@ -1,17 +1,72 @@
-.sidebar{
-position: sticky;
-  top: 20px;
+.sidebar {
+  /* position: sticky;
+  top: 20px; */
   flex: 0.25;
-  height: fit-content;
+  /* height: fit-content; */
+}
+.sidebar-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 0.1em 0.8em 0;
+}
+.sidebar img {
+  margin-top: 2em;
+  width: 100%;
+}
+.sidebar-flex > p {
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
-.sidebar ul li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1em 0.1em 1em 0;
-    border-bottom: 1px solid rebeccapurple;
+.sidebar .sidebar-icon {
+  color: #777;
+  cursor: pointer;
 }
-.sidebar ul li a{text-transform: uppercase;}
 
-.sidebar .sidebar-icon{color: #777;}
+/* Progress Bar */
+.Progress-main {
+  background-color: red;
+  display: block;
+  width: 100%;
+  height: 0.18em;
+  /* margin-top: 0.75em; */
+}
+.Progress-main::-moz-progress-bar {
+  background: rgb(173, 3, 3);
+}
+.Progress-main::-webkit-progress-bar {
+  background: #f2f2f2;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) inset;
+}
+.Progress-main::-webkit-progress-value {
+  background: rgb(173, 3, 3);
+}
+.Progress-main::-ms-fill {
+  background: rgb(173, 3, 3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) inset;
+}
+.Progress-bar {
+  margin-top: 0.95em;
+  background-color: rgb(173, 3, 3);
+  height: 0.2em;
+}
+.Progress-value {
+  background-color: #f2f2f2;
+  display: block;
+  height: 0.2em;
+}
+
+.expended-items-container {
+  transition: 2s;
+}
+
+.expended-list {
+  padding: 1em 0;
+}
+.expended-list > li {
+  margin: 1em 0;
+}
+.expended-list > li > p {
+  font-size: 0.8rem;
+}

@@ -1,3 +1,42 @@
+
+export const sidebar_data = [
+    {
+        id: 1,
+        name: "category",
+        expanded: false,
+        expandedData: [
+            { id: 1, name: 'PEL' },
+            { id: 2, name: 'Gree' },
+            { id: 3, name: 'iZone' },
+        ]
+    },
+    {
+        id: 2,
+        name: "price",
+        expanded: false
+    },
+    {
+        id: 3,
+        name: "brand",
+        expanded: false
+    },
+    {
+        id: 4,
+        name: "warranty",
+        expanded: false
+    },
+    {
+        id: 5,
+        name: "ton",
+        expanded: false
+    },
+    {
+        id: 6,
+        name: "heat & cool",
+        expanded: false
+    },
+]
+
 export const products_data = [
     {
         id: 1,

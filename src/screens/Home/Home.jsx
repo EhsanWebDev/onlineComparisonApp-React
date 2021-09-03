@@ -1,8 +1,4 @@
 
-
-import TopBar from "../../components/Topbar/Topbar"
-import Navbar from '../../components/Navbar/Navbar'
-
 import "./home.css"
 import Sidebar from "../../components/Sidebar/Sidebar"
 import Button from "../../components/Button/Button"
@@ -12,8 +8,7 @@ const Home = () => {
 
     return (
         <div className="home">
-            <Navbar />
-            <TopBar />
+
             <div className="main-content">
                 <Sidebar />
                 <div className="content">
