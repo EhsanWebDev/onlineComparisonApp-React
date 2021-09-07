@@ -3,8 +3,9 @@ import { Link } from "react-router-dom"
 import Input from "../Input/Input"
 import "./navbar.css"
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { Badge, Button, makeStyles, createStyles, FormControl, InputLabel, NativeSelect, withStyles, InputBase, Select } from "@material-ui/core";
+import { Badge, Button, makeStyles, createStyles, FormControl, InputLabel, NativeSelect, withStyles, InputBase, Select, Container } from "@material-ui/core";
 import { useState } from "react";
+import Brightness4Icon from '@material-ui/icons/Brightness4';
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -31,7 +32,6 @@ const BootstrapInput = withStyles((theme) => ({
         border: '1px solid #ced4da',
         fontSize: 16,
         padding: '10px 26px 10px 12px',
-        outline: 'none',
         transition: theme.transitions.create(['border-color', 'box-shadow']),
         // Use the system font instead of the default Roboto font.
         fontFamily: [
@@ -48,13 +48,10 @@ const BootstrapInput = withStyles((theme) => ({
         ].join(','),
         '&:focus': {
             borderRadius: 4,
-            borderColor: '#80bdff',
-            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-
         },
     },
 }))(InputBase);
-const Navbar = () => {
+const Navbar = ({ handleDarkMode }) => {
     const classes = useStyles();
 
     const [age, setAge] = useState('');
@@ -62,33 +59,43 @@ const Navbar = () => {
         setAge(event.target.value);
     };
     return (
-        <div className="navbar">
-            <Link to="/" >Logo</Link>
-            <div className="search-container">
-                <FormControl className={classes.margin} >
-                    <NativeSelect
-                        id="demo-customized-select-native"
-                        value={age}
-                        onChange={handleChange}
-                        input={<BootstrapInput />}
-                    >
-                        <option value="">All Categories</option>
-                        <option value={10}>A.C</option>
-                        <option value={20}>Heaters</option>
-                    </NativeSelect>
-                </FormControl>
-                <Input />
-                <Button variant="contained" color="primary" className={classes.input} >
-                    Search
-                </Button>
+        <Container fixed>
+            <div className="navbar">
+                <Link to="/" >Logo</Link>
+                <div className="search-container">
+                    <FormControl className={classes.margin} >
+                        <NativeSelect
+                            id="demo-customized-select-native"
+                            value={age}
+                            onChange={handleChange}
+                            input={<BootstrapInput />}
+                        >
+                            <option value="">All Categories</option>
+                            <option value={10}>A.C</option>
+                            <option value={20}>Heaters</option>
+                        </NativeSelect>
+                    </FormControl>
+                    <div className="input-container">
+                        <Input />
+                        <Button variant="contained" color="primary" className={classes.input} >
+                            Search
+                        </Button>
 
-                <Badge badgeContent={4} color="primary" >
-                    <ShoppingCartIcon className="cart-icon" />
-                </Badge>
+                        <Badge badgeContent={4} color="primary" >
+                            <ShoppingCartIcon className="cart-icon" />
+                        </Badge>
+                        <div onClick={handleDarkMode}>
+                            <Brightness4Icon className="cart-icon" />
+                        </div>
+
+                    </div>
+
+
+                </div>
 
             </div>
+        </Container>
 
-        </div>
     )
 }
 

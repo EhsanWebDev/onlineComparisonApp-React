@@ -1,11 +1,8 @@
 .navbar {
   display: flex;
   align-items: center;
-
   justify-content: space-evenly;
-  max-width: 1100px;
-  margin: auto;
-  margin-top: 1em;
+  padding-top: 1em;
 }
 .search-container {
   display: flex;
@@ -14,4 +11,17 @@
 .cart-icon {
   font-size: 2rem !important;
   margin-left: 0.2em;
+  cursor: pointer;
+}
+.input-container{
+  display: flex;
+  align-items: center;
+}
+@media (max-width:960px){
+.navbar{
+  flex-direction: column;
+}
+.search-container{
+  flex-direction: column;
+}
 }
