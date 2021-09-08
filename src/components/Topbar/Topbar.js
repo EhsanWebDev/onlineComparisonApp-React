@@ -1,26 +1,40 @@
 import { Link } from "react-router-dom"
 import "./topbar.css"
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { useState } from "react";
 const TopBar = () => {
+    const [expanded, setExpanded] = useState(false)
+    const handleToggle = () => {
+        setExpanded(!expanded)
+    }
     return (
-        <div className="topbar-container">
-            <ul>
+        <div className={`topbar-container`}>
+            <div className="menu">
+                <p>Menu</p>
+                {expanded ? <span onClick={handleToggle}> <ExpandLessIcon className="sidebar-icon" /></span>
+                    : <span onClick={handleToggle}><ExpandMoreIcon className="sidebar-icon" /></span>
+                }
+            </div>
+
+            <ul className={expanded ? "show-list" : "hide-list"}>
                 <li>
-                    <Link>Air Conditioner</Link>
+                    <Link to="/">Air Conditioner</Link>
                 </li>
                 <li>
-                    <Link>Reviews</Link>
+                    <Link to="/">Reviews</Link>
                 </li>
                 <li>
-                    <Link>Compare</Link>
+                    <Link to="/">Compare</Link>
                 </li>
                 <li>
-                    <Link>News</Link>
+                    <Link to="/">News</Link>
                 </li>
                 <li>
-                    <Link>Contact Us</Link>
+                    <Link to="/">Contact Us</Link>
                 </li>
                 <li>
-                    <Link>Outlets</Link>
+                    <Link to="/">Outlets</Link>
                 </li>
             </ul>
         </div>

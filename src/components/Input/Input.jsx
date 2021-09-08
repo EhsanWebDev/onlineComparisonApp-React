@@ -18,7 +18,6 @@ const Input = () => {
 
             <TextField InputProps={{
                 className: classes.input,
-
             }} id="outlined-basic" label="Search Here..." variant="outlined" fullWidth />
         </form>
     )

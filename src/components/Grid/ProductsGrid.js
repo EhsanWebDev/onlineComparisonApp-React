@@ -1,58 +1,65 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, Grid, makeStyles, Button } from "@material-ui/core"
 import Image from 'material-ui-image'
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    card: {
-        maxWidth: 320,
-        textAlign: 'center',
-        transition: "0.2s",
-        boxShadow: "0 0 4px  rgba(0,0,0,0.3)",
-        padding: "0 1px 1em",
-        display: "flex",
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        height: "100%",
-        cursor: "pointer",
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
-        "&:hover": {
-            boxShadow: "0 2px 15px  rgba(0,0,0,0.3)"
+const useStyles = props => makeStyles((theme) => {
+    return {
+        root: {
+            flexGrow: 1,
         },
-    },
-    media: {
-        width: '100%',
-        height: "auto",
-    },
-    btn: {
-        transition: ".5s",
-        "&:hover": {
-            backgroundColor: theme.palette.primary.main,
-            color: "white",
+        card: {
+            // maxWidth: 320,
+            textAlign: 'center',
+            transition: "0.2s",
+            boxShadow: "0 0 4px  rgba(0,0,0,0.3)",
+            padding: props ? ".2em .2em .8em" : ".5em .5em",
+            display: "flex",
+            flexDirection: props ? "column" : 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            height: "100%",
             cursor: "pointer",
+            "&:hover": {
+                boxShadow: "0 2px 15px  rgba(0,0,0,0.3)"
+            },
+        },
+        btn: {
+            transition: ".5s",
+            "&:hover": {
+                backgroundColor: theme.palette.primary.main,
+                color: "white",
+                cursor: "pointer",
+            }
         }
     }
+});
+const ProductsGrid = ({ DATA = [], gridView = true }) => {
 
-}));
-const ProductsGrid = ({ DATA = [] }) => {
-    const classes = useStyles();
+    const { card, btn, root } = useStyles(gridView)() || {};
     return (
         <Grid
-            container className={classes.root} spacing={2} >
+            container className={root} spacing={2} >
             {DATA.map((product, index) => {
                 const { id, name, image, price, brand } = product || {}
                 return (
-                    <Grid key={id} item xs={12} sm={6} md={4} xl={3}>
-                        <Card className={classes.card}>
-                            <Image
-                                src={image}
-                                imageStyle={{
-                                    width: '100%',
-                                    height: "auto",
-                                }}
-                            />
-                            {/* <img src={image} alt="" className={classes.media} /> */}
+                    <Grid key={id} item xs={12} sm={gridView ? 6 : 12} md={gridView ? 4 : 12} lg={gridView ? 3 : 6}>
+                        <Card className={card}>
+                            <div style={{ flexBasis: gridView ? '100%' : '50%', }}>
+                                <LazyLoadImage delayMethod="debounce"
+                                    alt={"alt"}
+                                    effect="blur"
+                                    src={image}
+                                    style={{
+                                        width: '100%',
+                                        height: "auto",
+                                        borderRadius: 6,
+                                    }} />
+                            </div>
+
+
+
                             <div className="product-info">
 
                                 <p className="product-name">{name}</p>
@@ -62,7 +69,7 @@ const ProductsGrid = ({ DATA = [] }) => {
                                     {brand}
                                 </p>
                                 <br />
-                                <Button variant="outlined" className={classes.btn} >
+                                <Button variant="outlined" className={btn} >
                                     add to cart
                                 </Button>
 

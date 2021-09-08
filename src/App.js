@@ -16,7 +16,7 @@ function App() {
     palette: {
       type: darkMode ? 'dark' : "light",
       primary: {
-        main: 'rgb(173, 3, 3)',
+        main: darkMode ? "#16a085" : 'rgb(173, 3, 3)',
 
       }
     }

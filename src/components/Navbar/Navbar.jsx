@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom"
-// import Button from "../Button/Button"
 import Input from "../Input/Input"
 import "./navbar.css"
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { Badge, Button, makeStyles, createStyles, FormControl, InputLabel, NativeSelect, withStyles, InputBase, Select, Container } from "@material-ui/core";
+import { Badge, Button, makeStyles, createStyles, FormControl, NativeSelect, withStyles, InputBase, Container, Grid } from "@material-ui/core";
 import { useState } from "react";
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 
@@ -61,38 +60,50 @@ const Navbar = ({ handleDarkMode }) => {
     return (
         <Container fixed>
             <div className="navbar">
-                <Link to="/" >Logo</Link>
-                <div className="search-container">
-                    <FormControl className={classes.margin} >
-                        <NativeSelect
-                            id="demo-customized-select-native"
-                            value={age}
-                            onChange={handleChange}
-                            input={<BootstrapInput />}
-                        >
-                            <option value="">All Categories</option>
-                            <option value={10}>A.C</option>
-                            <option value={20}>Heaters</option>
-                        </NativeSelect>
-                    </FormControl>
-                    <div className="input-container">
-                        <Input />
-                        <Button variant="contained" color="primary" className={classes.input} >
-                            Search
-                        </Button>
+                <Grid container spacing={1} alignItems="center" >
+                    <Grid item xs={12} sm={12} md={2} lg={2} >
+                        <Link to="/" >Logo</Link>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={8} lg={9} >
+                        <div className="search-container">
+                            <FormControl className={classes.margin} >
+                                <NativeSelect
+                                    id="demo-customized-select-native"
+                                    value={age}
+                                    onChange={handleChange}
+                                    input={<BootstrapInput />}
+                                >
+                                    <option value="">All Categories</option>
+                                    <option value={10}>A.C</option>
+                                    <option value={20}>Heaters</option>
+                                </NativeSelect>
+                            </FormControl>
+                            <div>
+                                <Input />
+                                <Button variant="contained" color="primary" className={classes.input} >
+                                    Search
+                                </Button>
+                            </div>
 
-                        <Badge badgeContent={4} color="primary" >
-                            <ShoppingCartIcon className="cart-icon" />
-                        </Badge>
-                        <div onClick={handleDarkMode}>
-                            <Brightness4Icon className="cart-icon" />
+
+                        </div>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={2} lg={1}>
+
+                        <div className="input-container">
+
+
+                            <Badge badgeContent={4} color="primary" >
+                                <ShoppingCartIcon className="cart-icon" />
+                            </Badge>
+                            <div onClick={handleDarkMode}>
+                                <Brightness4Icon className="cart-icon" />
+                            </div>
+
                         </div>
 
-                    </div>
-
-
-                </div>
-
+                    </Grid>
+                </Grid>
             </div>
         </Container>
 

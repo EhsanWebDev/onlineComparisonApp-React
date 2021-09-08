@@ -1,8 +1,5 @@
 .sidebar {
-  /* position: sticky;
-  top: 20px; */
   flex: 0.2;
-  /* height: fit-content; */
 }
 .sidebar-flex {
   display: flex;
@@ -69,4 +66,10 @@
 }
 .expended-list > li > p {
   font-size: 0.8rem;
+}
+
+@media (max-width: 959px) {
+  .sidebar img {
+    display: none;
+  }
 }
