@@ -3,6 +3,8 @@ import { Card, Grid, makeStyles, Button } from "@material-ui/core"
 import Image from 'material-ui-image'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { connect } from 'react-redux';
+import { addItem } from '../../redux/cart/cart.actions';
 
 const useStyles = props => makeStyles((theme) => {
     return {
@@ -35,7 +37,7 @@ const useStyles = props => makeStyles((theme) => {
         }
     }
 });
-const ProductsGrid = ({ DATA = [], gridView = true }) => {
+const ProductsGrid = ({ DATA = [], gridView = true, addItem }) => {
 
     const { card, btn, root } = useStyles(gridView)() || {};
     return (
@@ -58,18 +60,16 @@ const ProductsGrid = ({ DATA = [], gridView = true }) => {
                                     }} />
                             </div>
 
-
-
                             <div className="product-info">
 
                                 <p className="product-name">{name}</p>
-                                <p className="product-price">{price}</p>
+                                <p className="product-price">Rs {price}</p>
 
                                 <p className="product-brand">
                                     {brand}
                                 </p>
                                 <br />
-                                <Button variant="outlined" className={btn} >
+                                <Button onClick={() => addItem(product)} variant="outlined" className={btn} >
                                     add to cart
                                 </Button>
 
@@ -83,4 +83,14 @@ const ProductsGrid = ({ DATA = [], gridView = true }) => {
     )
 }
 
-export default ProductsGrid
+const mapStateToProps = ({ cart }) => {
+    const { cartItems } = cart || {}
+    return {
+        cartItems
+    }
+}
+const mapDispatchToProps = dispatch => ({
+    addItem: (item) => dispatch(addItem(item))
+});
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsGrid)
+

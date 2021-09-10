@@ -6,6 +6,7 @@ import './App.css';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
 import TopBar from './components/Topbar/Topbar';
+import Checkout from './screens/Checkout/Checkout';
 import Home from './screens/Home/Home';
 
 
@@ -29,13 +30,13 @@ function App() {
           <TopBar />
           <Container fixed>
             <Switch>
+              <Route path='/checkout' component={Checkout} />
               <Route path="/" component={Home} />
             </Switch>
           </Container>
           <Footer />
         </Router>
       </Paper>
-
     </ThemeProvider>
 
   );

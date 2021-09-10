@@ -22,6 +22,10 @@
   align-items: center;
   justify-content: center;
 }
+.cart-container {
+  position: relative;
+}
+
 @media (max-width: 600px) {
   .navbar {
     flex-direction: column;

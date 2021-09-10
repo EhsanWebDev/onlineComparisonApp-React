@@ -2,9 +2,12 @@ import { Link } from "react-router-dom"
 import Input from "../Input/Input"
 import "./navbar.css"
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { Badge, Button, makeStyles, createStyles, FormControl, NativeSelect, withStyles, InputBase, Container, Grid } from "@material-ui/core";
+import { Badge, Button, makeStyles, createStyles, FormControl, NativeSelect, withStyles, InputBase, Container, Grid, Paper } from "@material-ui/core";
 import { useState } from "react";
 import Brightness4Icon from '@material-ui/icons/Brightness4';
+import { motion } from "framer-motion";
+import CartDropDown from "../Cart/CartDropDown/CartDropDown";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -50,10 +53,12 @@ const BootstrapInput = withStyles((theme) => ({
         },
     },
 }))(InputBase);
-const Navbar = ({ handleDarkMode }) => {
+const Navbar = ({ handleDarkMode, cartItems }) => {
     const classes = useStyles();
 
     const [age, setAge] = useState('');
+    const [showCart, setShowCart] = useState(false)
+
     const handleChange = (event) => {
         setAge(event.target.value);
     };
@@ -91,11 +96,17 @@ const Navbar = ({ handleDarkMode }) => {
                     <Grid item xs={12} sm={12} md={2} lg={1}>
 
                         <div className="input-container">
+                            <div className="cart-container">
+                                <span onClick={() => setShowCart(!showCart)}>
+                                    <Badge badgeContent={(cartItems || []).length} color="primary" >
+                                        <ShoppingCartIcon className="cart-icon" />
+                                    </Badge>
+                                </span>
+
+                                <CartDropDown showCart={showCart} toggleShowCart={(value) => setShowCart(value)} />
+                            </div>
 
 
-                            <Badge badgeContent={4} color="primary" >
-                                <ShoppingCartIcon className="cart-icon" />
-                            </Badge>
                             <div onClick={handleDarkMode}>
                                 <Brightness4Icon className="cart-icon" />
                             </div>
@@ -109,5 +120,11 @@ const Navbar = ({ handleDarkMode }) => {
 
     )
 }
+const mapStateToProps = ({ cart }) => {
+    const { cartItems } = cart || {}
+    return {
+        cartItems
+    }
+}
+export default connect(mapStateToProps,)(Navbar)
 
-export default Navbar
