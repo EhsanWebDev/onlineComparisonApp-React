@@ -7,13 +7,22 @@ import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
 import TopBar from './components/Topbar/Topbar';
 import Checkout from './screens/Checkout/Checkout';
+import ContactUs from './screens/ContactUs/ContactUs';
 import Home from './screens/Home/Home';
+import ProductDetail from './screens/ProductDetail/ProductDetail';
 
 
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
   const theme = createTheme({
+    typography: {
+      fontFamily: [
+        'Roboto',
+        '-apple-system',
+      ].join(','),
+    },
+
     palette: {
       type: darkMode ? 'dark' : "light",
       primary: {
@@ -31,6 +40,8 @@ function App() {
           <Container fixed>
             <Switch>
               <Route path='/checkout' component={Checkout} />
+              <Route path='/contact-us' component={ContactUs} />
+              <Route path='/product-details/:id' component={ProductDetail} />
               <Route path="/" component={Home} />
             </Switch>
           </Container>

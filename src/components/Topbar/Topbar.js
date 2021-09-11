@@ -3,11 +3,15 @@ import "./topbar.css"
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useState } from "react";
-const TopBar = () => {
+import { withRouter, matchPath } from 'react-router-dom'
+
+const TopBar = ({ location }) => {
     const [expanded, setExpanded] = useState(false)
     const handleToggle = () => {
         setExpanded(!expanded)
     }
+
+    // console.log({ isMovieWatchPathActive })
     return (
         <div className={`topbar-container`}>
             <div className="menu">
@@ -31,7 +35,10 @@ const TopBar = () => {
                     <Link to="/">News</Link>
                 </li>
                 <li>
-                    <Link to="/">Contact Us</Link>
+                    <Link className={!!matchPath(
+                        location.pathname,
+                        '/contact-us'
+                    ) && "active"} to="/contact-us">Contact Us</Link>
                 </li>
                 <li>
                     <Link to="/">Outlets</Link>
@@ -41,4 +48,4 @@ const TopBar = () => {
     )
 }
 
-export default TopBar
+export default withRouter(TopBar)

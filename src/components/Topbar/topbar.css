@@ -9,16 +9,26 @@
 .menu {
   display: none;
 }
-.topbar-container ul li {
+.topbar-container ul li a {
   margin-left: 1.5em;
   transition: all 0.5s ease-out;
 }
 
-.topbar-container ul li:hover {
+.topbar-container ul li a:hover {
   color: rgb(173, 3, 3);
   padding-right: 0.5em;
   border-right: 1px solid rgb(173, 3, 3);
   font-weight: 500;
+}
+
+.topbar-container ul li a.active {
+  color: rgb(173, 3, 3);
+  padding-right: 0.5em;
+  border-right: 1px solid rgb(173, 3, 3);
+  font-weight: 500;
+}
+.topbar-container ul li a.active:hover {
+  color: inherit;
 }
 
 @media (max-width: 600px) {

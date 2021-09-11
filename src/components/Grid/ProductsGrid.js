@@ -5,6 +5,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { connect } from 'react-redux';
 import { addItem } from '../../redux/cart/cart.actions';
+import { withRouter } from 'react-router';
 
 const useStyles = props => makeStyles((theme) => {
     return {
@@ -37,7 +38,7 @@ const useStyles = props => makeStyles((theme) => {
         }
     }
 });
-const ProductsGrid = ({ DATA = [], gridView = true, addItem }) => {
+const ProductsGrid = ({ DATA = [], gridView = true, addItem, history }) => {
 
     const { card, btn, root } = useStyles(gridView)() || {};
     return (
@@ -47,7 +48,7 @@ const ProductsGrid = ({ DATA = [], gridView = true, addItem }) => {
                 const { id, name, image, price, brand } = product || {}
                 return (
                     <Grid key={id} item xs={12} sm={gridView ? 6 : 12} md={gridView ? 4 : 12} lg={gridView ? 3 : 6}>
-                        <Card className={card}>
+                        <Card onClick={() => history.push(`/product-details/${id}`)} className={card}>
                             <div style={{ flexBasis: gridView ? '100%' : '50%', }}>
                                 <LazyLoadImage delayMethod="debounce"
                                     alt={"alt"}
@@ -92,5 +93,5 @@ const mapStateToProps = ({ cart }) => {
 const mapDispatchToProps = dispatch => ({
     addItem: (item) => dispatch(addItem(item))
 });
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsGrid)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductsGrid))
 
