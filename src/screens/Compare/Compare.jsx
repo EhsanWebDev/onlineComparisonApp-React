@@ -1,4 +1,4 @@
-import { Divider, Grid, makeStyles, Typography, createStyles, TextField, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@material-ui/core'
+import { Divider, Grid, makeStyles, Typography, createStyles, TextField, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Breadcrumbs, Link } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { products_data } from '../../data'
@@ -91,7 +91,7 @@ const product = {
     price: 60000
 }
 
-const Compare = () => {
+const Compare = ({ history }) => {
     const {
         marginTop, tableHeader, product_info, table_cell,
         review_title, auto_img, auto_title, auto_brand,
@@ -113,7 +113,6 @@ const Compare = () => {
 
     }
     const CompareItem = () => {
-
         return (
             <Grid item xs={4} sm={5} md={4} lg={3}  >
                 <Typography variant="h6" style={{ textAlign: 'center', margin: '1em 0', fontSize: '.85rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Gree Ac</Typography>
@@ -122,8 +121,20 @@ const Compare = () => {
             </Grid>
         )
     }
+    function handleClick(event) {
+        event.preventDefault();
+        history.push('/')
+
+    }
     return (
         <div style={{ marginTop: "2em" }}>
+            <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" href="/" onClick={handleClick}>
+                    Home
+                </Link>
+
+                <Typography color="textPrimary">Comparison</Typography>
+            </Breadcrumbs>
             <Typography variant="h5" >Compare</Typography>
             <Typography variant="body2">Specifications</Typography>
             <Divider className={marginTop} />

@@ -1,4 +1,4 @@
-import { Grid, makeStyles, Paper, TextField, Typography, createStyles, Button } from '@material-ui/core'
+import { Grid, makeStyles, Paper, TextField, Typography, createStyles, Button, Breadcrumbs, Link, Divider } from '@material-ui/core'
 import React from 'react'
 
 import RoomIcon from '@material-ui/icons/Room';
@@ -26,71 +26,90 @@ const useStyles = makeStyles((theme) =>
 
     })
 );
-const ContactUs = () => {
+
+const ContactUs = ({ history }) => {
     const { information, input, marginTop, marginSm, marginLeft } = useStyles() || {}
+    function handleClick(event) {
+        event.preventDefault();
+        history.push('/')
+
+    }
     return (
-        <Grid container justifyContent="center" style={{ margin: '4em 0 8em' }} >
-            <Grid item xs={12} md={10} lg={8}>
-                <Paper elevation={4} className={information} >
-                    <Typography variant="h6" component="h6" style={{ textAlign: 'center', }}>
-                        GET IN TOUCH
-                    </Typography>
-                    <Grid container className={marginTop} alignItems="center" style={{ padding: '.5em 2em 2em' }}>
-                        <Grid item md={6} className={marginSm} >
-                            <Grid container direction="row" alignItems="center" className={marginSm}>
-                                <RoomIcon fontSize="small" />
-                                <Typography className={marginLeft} variant="caption">123, Main Raiwind Road, Lahore, Pakistan</Typography>
-                            </Grid>
-                            <Grid container direction="row" alignItems="center" className={marginSm}>
-                                <Email fontSize="small" />
-                                <Typography className={marginLeft} variant="caption">Company@hotmail.com</Typography>
-                            </Grid>
-                            <Grid container direction="row" alignItems="center" className={marginSm}>
-                                <Phone fontSize="small" />
-                                <Typography className={marginLeft} variant="caption">+92 300 1234567</Typography>
-                            </Grid>
-                        </Grid>
-                        <Grid item md={6}>
-                            <form noValidate autoComplete="off">
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12} md={12}>
-                                        <TextField
-                                            fullWidth
-                                            InputLabelProps={{
-                                                classes: {
-                                                    root: input,
-                                                }
-                                            }} className={input} id="name" label="Name" />
-                                    </Grid>
-                                    <Grid item xs={12} md={12}>
-                                        <TextField fullWidth InputLabelProps={{
-                                            classes: {
-                                                root: input,
-                                            }
-                                        }} className={input} id="email" label="Email" />
-                                    </Grid>
-                                    <Grid item xs={12} md={12}>
-                                        <TextField
-                                            fullWidth minRows={4}
-                                            multiline maxRows={8}
-                                            InputLabelProps={{
-                                                classes: {
-                                                    root: input,
-                                                }
-                                            }} id="company" label="Write your message here" />
-                                    </Grid>
+        <div style={{ margin: '2em 0 8em' }}>
+            <Breadcrumbs aria-label="breadcrumb" >
+                <Link color="inherit" href="/" onClick={handleClick}>
+                    Home
+                </Link>
 
-                                    <Button className={marginTop} color="primary" fullWidth variant="contained">Send</Button>
-
-
+                <Typography color="textPrimary">Contact Us</Typography>
+            </Breadcrumbs>
+            <Typography variant="h5" >Contact Us</Typography>
+            <Typography variant="body2">Share your thoughts</Typography>
+            <Divider className={marginTop} />
+            <Grid container justifyContent="center" style={{ margin: '2em 0 ' }} >
+                <Grid item xs={12} md={10} lg={8}>
+                    <Paper elevation={4} className={information} >
+                        <Typography variant="h6" component="h6" style={{ textAlign: 'center', }}>
+                            GET IN TOUCH
+                        </Typography>
+                        <Grid container className={marginTop} alignItems="center" style={{ padding: '.5em 2em 2em' }}>
+                            <Grid item md={6} className={marginSm} >
+                                <Grid container direction="row" alignItems="center" className={marginSm}>
+                                    <RoomIcon fontSize="small" />
+                                    <Typography className={marginLeft} variant="caption">123, Main Raiwind Road, Lahore, Pakistan</Typography>
                                 </Grid>
-                            </form>
-                        </Grid>
-                    </Grid>
+                                <Grid container direction="row" alignItems="center" className={marginSm}>
+                                    <Email fontSize="small" />
+                                    <Typography className={marginLeft} variant="caption">Company@hotmail.com</Typography>
+                                </Grid>
+                                <Grid container direction="row" alignItems="center" className={marginSm}>
+                                    <Phone fontSize="small" />
+                                    <Typography className={marginLeft} variant="caption">+92 300 1234567</Typography>
+                                </Grid>
+                            </Grid>
+                            <Grid item md={6}>
+                                <form noValidate autoComplete="off">
+                                    <Grid container spacing={2}>
+                                        <Grid item xs={12} md={12}>
+                                            <TextField
+                                                fullWidth
+                                                InputLabelProps={{
+                                                    classes: {
+                                                        root: input,
+                                                    }
+                                                }} className={input} id="name" label="Name" />
+                                        </Grid>
+                                        <Grid item xs={12} md={12}>
+                                            <TextField fullWidth InputLabelProps={{
+                                                classes: {
+                                                    root: input,
+                                                }
+                                            }} className={input} id="email" label="Email" />
+                                        </Grid>
+                                        <Grid item xs={12} md={12}>
+                                            <TextField
+                                                fullWidth minRows={4}
+                                                multiline maxRows={8}
+                                                InputLabelProps={{
+                                                    classes: {
+                                                        root: input,
+                                                    }
+                                                }} id="company" label="Write your message here" />
+                                        </Grid>
 
-                </Paper>
+                                        <Button className={marginTop} color="primary" fullWidth variant="contained">Send</Button>
+
+
+                                    </Grid>
+                                </form>
+                            </Grid>
+                        </Grid>
+
+                    </Paper>
+                </Grid>
             </Grid>
-        </Grid>
+        </div>
+
     )
 }
 
