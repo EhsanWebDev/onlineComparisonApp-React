@@ -27,7 +27,6 @@ function App() {
       type: darkMode ? 'dark' : "light",
       primary: {
         main: darkMode ? "#16a085" : 'rgb(173, 3, 3)',
-
       }
     }
   })

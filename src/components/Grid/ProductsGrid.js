@@ -48,8 +48,8 @@ const ProductsGrid = ({ DATA = [], gridView = true, addItem, history }) => {
                 const { id, name, image, price, brand } = product || {}
                 return (
                     <Grid key={id} item xs={12} sm={gridView ? 6 : 12} md={gridView ? 4 : 12} lg={gridView ? 3 : 6}>
-                        <Card onClick={() => history.push(`/product-details/${id}`)} className={card}>
-                            <div style={{ flexBasis: gridView ? '100%' : '50%', }}>
+                        <Card className={card}>
+                            <div onClick={() => history.push(`/product-details/${id}`)} style={{ flexBasis: gridView ? '100%' : '50%', }}>
                                 <LazyLoadImage delayMethod="debounce"
                                     alt={"alt"}
                                     effect="blur"
@@ -63,7 +63,7 @@ const ProductsGrid = ({ DATA = [], gridView = true, addItem, history }) => {
 
                             <div className="product-info">
 
-                                <p className="product-name">{name}</p>
+                                <p onClick={() => history.push(`/product-details/${id}`)} className="product-name">{name}</p>
                                 <p className="product-price">Rs {price}</p>
 
                                 <p className="product-brand">

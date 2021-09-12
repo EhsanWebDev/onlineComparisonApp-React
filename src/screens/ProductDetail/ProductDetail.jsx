@@ -1,4 +1,4 @@
-import { Grid, makeStyles, Typography, withStyles, createStyles, Button, Paper, Tabs, Tab } from '@material-ui/core'
+import { Grid, makeStyles, Typography, withStyles, createStyles, Button, Paper, Tabs, Tab, LinearProgress, Divider } from '@material-ui/core'
 import Rating from '@material-ui/lab/Rating'
 import React, { useState } from 'react'
 import { Carousel } from 'react-responsive-carousel'
@@ -14,15 +14,20 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import DescriptionIcon from '@material-ui/icons/Description';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import RateReviewIcon from '@material-ui/icons/RateReview';
+import ProgressBar from '../../components/ProgressBar'
+import Review from '../../components/Reviews/Review'
 
 const StyledRating = withStyles((theme) => ({
-    iconFilled: {
-        color: theme.palette.primary.main,
-    },
+    // iconFilled: {
+    //     color: "#E58070",
+    // },
     sizeSmall: {
         fontSize: "1rem"
     }
 }))(Rating);
+
+
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         specContainer: {
@@ -31,12 +36,24 @@ const useStyles = makeStyles((theme) =>
         specText: {
             marginLeft: ".6em",
         },
+        marginTopSm: {
+            marginTop: '.4em',
+        },
+        marginTop: {
+            marginTop: '.6em',
+        },
+        marginTopLg: {
+            marginTop: '.8em',
+        },
+        review: {
+            flexBasis: "25%",
+        }
 
 
     })
 );
 const ProductDetail = () => {
-    const { specContainer, specText } = useStyles()
+    const { specContainer, review, specText, marginTop, marginTopSm, marginTopLg } = useStyles()
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
@@ -50,7 +67,7 @@ const ProductDetail = () => {
             <Grid item md={6}>
                 <Typography variant="h5">Product Name</Typography>
                 <Grid container direction="row" alignItems="center" className={specContainer}>
-                    <StyledRating precision={0.5} color="primary" emptyIcon={<StarBorderIcon fontSize="inherit" />} readOnly name="half-rating" defaultValue={2.5} size="small" />
+                    <StyledRating precision={0.5} color="primary" readOnly name="half-rating" defaultValue={2.5} size="small" />
                     <Typography variant="body2" className={specText}>2.5 (99)</Typography>
                 </Grid>
                 <Grid container direction="row" alignItems="center" className={specContainer}>
@@ -78,7 +95,7 @@ const ProductDetail = () => {
                     <CheckCircleOutlineIcon style={{ fontSize: 18 }} />
                     <Typography variant="caption" color="primary" className={specText}>Price Match Guarantee</Typography>
                 </Grid>
-                <Button variant="contained" color="primary"><AddShoppingCartIcon fontSize="small" style={{ margin: '0 .3em 0 0' }} /> Add to cart</Button>
+                <Button variant="contained" color="primary">Add to cart</Button>
             </Grid>
 
             <Grid item xs={12} md={12}>
@@ -97,7 +114,7 @@ const ProductDetail = () => {
                     </Tabs>
                 </Paper>
 
-                {value === 0 && <Typography variant="body2" style={{ padding: '2em 25em 2em .5em', textAlign: 'justify' }}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro veritatis, optio asperiores voluptates reiciendis eum, molestiae fuga quia amet commodi suscipit! Pariatur eveniet, at sequi sunt illo laborum non eum commodi maxime, minima similique quasi culpa dignissimos possimus magni perspiciatis.</Typography>}
+                {value === 0 && <Typography variant="body2" style={{ padding: '2em 5em 2em .5em', }}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro veritatis, optio asperiores voluptates reiciendis eum, molestiae fuga quia amet commodi suscipit! Pariatur eveniet, at sequi sunt illo laborum non eum commodi maxime, minima similique quasi culpa dignissimos possimus magni perspiciatis.</Typography>}
                 {value === 1 && <Grid container style={{ padding: '2em .5em' }}>
                     <Grid container direction="row" alignItems="center" className={specContainer}>
                         <Typography variant="button" className={specText}>Brand</Typography>
@@ -116,7 +133,45 @@ const ProductDetail = () => {
                         <Typography variant="body2" className={specText}>No</Typography>
                     </Grid>
                 </Grid>}
+                {value === 2 &&
+                    <>
+                        <Grid container direction="column" alignItems="center" style={{ padding: '2em .5em' }}>
+                            <Grid container direction="column" alignItems="center" >
+                                <Typography variant="h3">4.0</Typography>
+                                <StyledRating precision={0.5} readOnly name="half-rating" defaultValue={4.0} size="medium" />
+                                <Typography className={marginTopSm} variant="subtitle2">Based on 23 reviews</Typography>
+                            </Grid>
+                            <Grid container className={marginTopLg} direction="column" alignItems="center" justifyContent="center">
+                                <Grid container md={6} direction="row" alignItems="center"  >
+                                    <Typography className={review} variant="body2" >Excellent</Typography>
+                                    <ProgressBar value={88} />
+                                </Grid>
+                                <Grid container md={6} direction="row" alignItems="center"  >
+                                    <Typography className={review} variant="body2" >Good</Typography>
+                                    <ProgressBar value={75} color="#A6D632" />
+                                </Grid>
+                                <Grid container md={6} direction="row" alignItems="center"  >
+                                    <Typography className={review} variant="body2" >Average</Typography>
+                                    <ProgressBar value={50} color="#F6E72F" />
+                                </Grid>
+                                <Grid container md={6} direction="row" alignItems="center"  >
+                                    <Typography className={review} variant="body2" >Below Average</Typography>
+                                    <ProgressBar value={25} color="#F6A420" />
+                                </Grid>
+                                <Grid container md={6} direction="row" alignItems="center"  >
+                                    <Typography className={review} variant="body2" >Poor</Typography>
+                                    <ProgressBar value={10} color="#EE3B0F" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Review />
+                        <Review />
+                        <Review />
+                        <Review />
+                        <Review />
+                    </>
 
+                }
             </Grid>
         </Grid>
     )
