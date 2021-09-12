@@ -40,7 +40,7 @@ export const sidebar_data = [
 export const products_data = [
     {
         id: 1,
-        name: "Gree 606 6 Feet Air Curtain",
+        name: "Gree 606 6 ",
         price: 42999,
         brand: "Gree",
         image: "https://i.gadgets360cdn.com/large/nokia_air_conditioner_image_flipkart_1608556296721.jpg"

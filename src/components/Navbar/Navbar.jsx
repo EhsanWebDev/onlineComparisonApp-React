@@ -174,12 +174,12 @@ const Navbar = ({ handleDarkMode, cartItems, history }) => {
 
                                 <Paper square elevation={8} style={{ position: 'sticky', bottom: 0, right: 0, left: 0, padding: '2em .6em 1.5em' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: "0em 0" }}>
-                                        <Typography variant="caption" style={{ fontWeight: 300 }}>Subtotal</Typography>
-                                        <Typography variant="caption" style={{ fontWeight: 300 }}>Rs 12000</Typography>
+                                        <Typography variant="caption" >Subtotal</Typography>
+                                        <Typography variant="caption" >Rs 12000</Typography>
                                     </div>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: "0 0 3em 0 " }}>
-                                        <Typography variant="caption" style={{ fontWeight: 300 }}>Shipping</Typography>
-                                        <Typography variant="caption" style={{ fontWeight: 300 }}>FREE</Typography>
+                                        <Typography variant="caption" >Shipping</Typography>
+                                        <Typography variant="caption" >FREE</Typography>
                                     </div>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: "1em 0 1.5em" }}>
                                         <Typography variant="subtitle2">Total</Typography>

@@ -29,7 +29,10 @@ const TopBar = ({ location }) => {
                     <Link to="/">Reviews</Link>
                 </li>
                 <li>
-                    <Link to="/">Compare</Link>
+                    <Link className={!!matchPath(
+                        location.pathname,
+                        '/compare'
+                    ) && "active"} to="/compare">Compare</Link>
                 </li>
                 <li>
                     <Link to="/">News</Link>

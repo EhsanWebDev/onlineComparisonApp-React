@@ -1,5 +1,5 @@
 
-import { Container, createTheme, Paper, ThemeProvider } from '@material-ui/core';
+import { Container, createTheme, Paper, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
 import { useState } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
@@ -7,6 +7,7 @@ import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
 import TopBar from './components/Topbar/Topbar';
 import Checkout from './screens/Checkout/Checkout';
+import Compare from './screens/Compare/Compare';
 import ContactUs from './screens/ContactUs/ContactUs';
 import Home from './screens/Home/Home';
 import ProductDetail from './screens/ProductDetail/ProductDetail';
@@ -15,7 +16,7 @@ import ProductDetail from './screens/ProductDetail/ProductDetail';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
-  const theme = createTheme({
+  let theme = createTheme({
     typography: {
       fontFamily: [
         'Roboto',
@@ -30,6 +31,7 @@ function App() {
       }
     }
   })
+  theme = responsiveFontSizes(theme)
   return (
     <ThemeProvider theme={theme}>
       <Paper style={{ borderRadius: 0 }}>
@@ -39,6 +41,7 @@ function App() {
           <Container fixed>
             <Switch>
               <Route path='/checkout' component={Checkout} />
+              <Route path='/compare' component={Compare} />
               <Route path='/contact-us' component={ContactUs} />
               <Route path='/product-details/:id' component={ProductDetail} />
               <Route path="/" component={Home} />

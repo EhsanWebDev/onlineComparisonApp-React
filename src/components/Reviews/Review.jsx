@@ -21,6 +21,8 @@ const useStyles = makeStyles(theme => {
         desc: {
             color: type === "light" ? "#757575" : '#e0e0e0',
             padding: "0 1em 0 0",
+            marginTop: theme.spacing(1),
+            fontWeight: 300
         },
         user_avatar: { display: 'flex', alignItems: 'center', marginTop: theme.spacing(1) },
         title_container: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingRight: theme.spacing(2) },

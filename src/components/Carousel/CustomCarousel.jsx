@@ -5,14 +5,14 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 const CustomCarousel = ({ showThumbs = false, showArrows = true, autoPlay = true }) => {
     const renderItem = (item, rest) => {
         return (
-            <div style={{ maxWidth: 550 }}>
+            <div style={{ maxWidth: 550, }}>
                 <LazyLoadImage delayMethod="debounce"
                     alt={"alt"}
                     effect="blur"
                     src={item.props.children.props.src}
                     style={{
                         width: '100%',
-                        // height: "auto",
+                        borderRadius: 4,
                     }} />
             </div>
         )

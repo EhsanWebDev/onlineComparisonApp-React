@@ -16,6 +16,7 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import ProgressBar from '../../components/ProgressBar'
 import Review from '../../components/Reviews/Review'
+import { useEffect } from 'react'
 
 const StyledRating = withStyles((theme) => ({
     // iconFilled: {
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) =>
             marginTop: '.8em',
         },
         review: {
-            flexBasis: "25%",
+            // flexBasis: "25%",
         }
 
 
@@ -56,12 +57,16 @@ const ProductDetail = () => {
     const { specContainer, review, specText, marginTop, marginTopSm, marginTopLg } = useStyles()
     const [value, setValue] = useState(0);
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
     return (
-        <Grid container spacing={3} style={{ margin: '3em 0 18em' }}>
-            <Grid item md={6}>
+        <Grid container spacing={1} style={{ margin: '3em 0 18em' }}>
+            <Grid item xs={12} md={6}>
                 <CustomCarousel autoPlay={false} showArrows={false} showThumbs={true} />
             </Grid>
             <Grid item md={6}>
@@ -99,7 +104,7 @@ const ProductDetail = () => {
             </Grid>
 
             <Grid item xs={12} md={12}>
-                <Paper >
+                <Paper style={{ marginTop: "4em" }} >
                     <Tabs
                         value={value}
                         indicatorColor="primary"
@@ -143,23 +148,23 @@ const ProductDetail = () => {
                             </Grid>
                             <Grid container className={marginTopLg} direction="column" alignItems="center" justifyContent="center">
                                 <Grid container md={6} direction="row" alignItems="center"  >
-                                    <Typography className={review} variant="body2" >Excellent</Typography>
+                                    <Typography className={review} variant="body2" >5</Typography>
                                     <ProgressBar value={88} />
                                 </Grid>
                                 <Grid container md={6} direction="row" alignItems="center"  >
-                                    <Typography className={review} variant="body2" >Good</Typography>
+                                    <Typography className={review} variant="body2" >4</Typography>
                                     <ProgressBar value={75} color="#A6D632" />
                                 </Grid>
                                 <Grid container md={6} direction="row" alignItems="center"  >
-                                    <Typography className={review} variant="body2" >Average</Typography>
+                                    <Typography className={review} variant="body2" >3</Typography>
                                     <ProgressBar value={50} color="#F6E72F" />
                                 </Grid>
                                 <Grid container md={6} direction="row" alignItems="center"  >
-                                    <Typography className={review} variant="body2" >Below Average</Typography>
+                                    <Typography className={review} variant="body2" >2</Typography>
                                     <ProgressBar value={25} color="#F6A420" />
                                 </Grid>
                                 <Grid container md={6} direction="row" alignItems="center"  >
-                                    <Typography className={review} variant="body2" >Poor</Typography>
+                                    <Typography className={review} variant="body2" >1</Typography>
                                     <ProgressBar value={10} color="#EE3B0F" />
                                 </Grid>
                             </Grid>
