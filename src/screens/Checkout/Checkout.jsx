@@ -64,8 +64,8 @@ const CheckoutPage = ({ cartItems, total }) => {
     const theme = useTheme();
     return (
 
-        <Grid container spacing={2} className={marginTop}>
-            <Grid item xs={12} md={6}>
+        <Grid container spacing={2} className={marginTop} justifyContent="center">
+            <Grid item xs={12} md={6} lg={4}>
                 <Paper elevation={4} className={information} >
                     <Typography variant="h6" component="h6">
                         Information
@@ -214,7 +214,7 @@ const CheckoutPage = ({ cartItems, total }) => {
 
                 </Paper>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} lg={4}>
                 <Paper className={information} elevation={4}>
                     <Typography variant="h6" component="h6">Order summary</Typography>
                     <Grid container>
