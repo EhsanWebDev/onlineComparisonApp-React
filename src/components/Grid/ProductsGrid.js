@@ -55,8 +55,7 @@ const ProductsGrid = ({ DATA = [], gridView = true, addItem, history }) => {
                                     effect="blur"
                                     src={image}
                                     style={{
-                                        width: '100%',
-                                        height: "auto",
+                                        width: "clamp(60%,80%,100%)",
                                         borderRadius: 6,
                                     }} />
                             </div>
@@ -70,9 +69,12 @@ const ProductsGrid = ({ DATA = [], gridView = true, addItem, history }) => {
                                     {brand}
                                 </p>
                                 <br />
-                                <Button onClick={() => addItem(product)} variant="outlined" className={btn} >
-                                    add to cart
+                                <Button onClick={() => history.push("/compare")} variant="outlined" className={btn} >
+                                    Compare
                                 </Button>
+                                {/* <Button onClick={() => addItem(product)} variant="outlined" className={btn} >
+                                    add to cart
+                                </Button> */}
 
                             </div>
                         </Card>

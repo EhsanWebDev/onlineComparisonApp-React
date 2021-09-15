@@ -3,6 +3,8 @@ import { Autocomplete } from '@material-ui/lab';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { products_data } from '../../data'
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { useEffect } from 'react';
+import CompareTable from './components/CompareTable';
 
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -97,7 +99,9 @@ const Compare = ({ history }) => {
         review_title, auto_img, auto_title, auto_brand,
         input
     } = useStyles() || {}
-
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     const renderOption = (item, rest) => {
         const { name, brand, image } = item || {}
         const { selected } = rest || {}
@@ -114,7 +118,7 @@ const Compare = ({ history }) => {
     }
     const CompareItem = () => {
         return (
-            <Grid item xs={4} sm={5} md={4} lg={3}  >
+            <Grid item xs={4} sm={5} md={4} lg={3}>
                 <Typography variant="h6" style={{ textAlign: 'center', margin: '1em 0', fontSize: '.85rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Gree Ac</Typography>
                 <img src={product.image} style={{ width: '100%' }} />
 
@@ -215,32 +219,10 @@ const Compare = ({ history }) => {
             </Grid>
             <Grid container>
                 <Grid item xs={12} md={12} className={marginTop}>
-                    <TableContainer component={Paper}>
-                        <Table aria-label="simple table">
-                            <TableHead >
-                                <TableRow >
-                                    <TableCell className={tableHeader}>Launch</TableCell>
-                                    <TableCell className={tableHeader}></TableCell>
-                                    <TableCell className={tableHeader}></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell>
-                                        <Typography variant="subtitle2" className={review_title} >Announced</Typography>
-                                    </TableCell>
-                                    <TableCell className={table_cell}>
-                                        <Typography variant="caption" className={product_info}>2019, September 10</Typography>
-                                    </TableCell>
-                                    <TableCell className={table_cell}>
-                                        <Typography variant="caption" className={product_info}>2019, September 10</Typography>
-                                    </TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                    <CompareTable />
+                    <CompareTable />
                 </Grid>
-                <Grid item xs={12} md={12} className={marginTop}>
+                {/* <Grid item xs={12} md={12} className={marginTop}>
                     <TableContainer component={Paper}>
                         <Table aria-label="simple table">
                             <TableHead >
@@ -343,7 +325,7 @@ const Compare = ({ history }) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </Grid>
+                </Grid> */}
             </Grid>
         </div>
     )

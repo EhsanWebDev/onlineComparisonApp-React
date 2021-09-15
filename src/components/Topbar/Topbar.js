@@ -14,12 +14,12 @@ const TopBar = ({ location }) => {
     // console.log({ isMovieWatchPathActive })
     return (
         <div className={`topbar-container`}>
-            <div className="menu">
+            {/* <div className="menu">
                 <p>Menu</p>
                 {expanded ? <span onClick={handleToggle}> <ExpandLessIcon className="sidebar-icon" /></span>
                     : <span onClick={handleToggle}><ExpandMoreIcon className="sidebar-icon" /></span>
                 }
-            </div>
+            </div> */}
 
             <ul className={expanded ? "show-list" : "hide-list"}>
                 <li>

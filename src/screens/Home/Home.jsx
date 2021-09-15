@@ -9,18 +9,37 @@ import { Grid } from "@material-ui/core";
 import ViewListIcon from '@material-ui/icons/ViewList';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import { useState } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/blur.css';
 const Home = () => {
     const [gridView, setGridView] = useState(true)
+    const renderItem = (item, rest) => {
+        return (
+            <div style={{ maxHeight: 650, }}>
+                <LazyLoadImage delayMethod="debounce"
+                    alt={"alt"}
+                    effect="blur"
+                    src={item.props.children.props.src}
+                    style={{
+                        width: '100%',
+                        // objectFit: 'contain',
+                        // height: "auto",
+                        borderRadius: 4,
+                    }} />
+            </div>
+        )
+    }
     return (
         <>
             <Grid container spacing={2}>
-                <Grid item xs={12} md={3} lg={2} >
+                {/* <Grid item xs={12} md={3} lg={2} >
                     <Sidebar />
-                </Grid>
-                <Grid item xs={12} md={9} lg={10} >
+                </Grid> */}
+                <Grid item xs={12} md={12} lg={12} >
+
                     <div className="content">
                         <div style={{ marginBottom: 30 }}>
-                            <Carousel dynamicHeight transitionTime={900} showThumbs={false} interval={2500} infiniteLoop autoPlay style>
+                            <Carousel dynamicHeight={false} renderItem={renderItem} transitionTime={900} showThumbs={false} interval={2500} infiniteLoop autoPlay style>
                                 <div>
                                     <img src="https://media.gettyimages.com/photos/turning-on-the-air-conditioner-picture-id1259269839" alt="carosel" />
                                 </div>
