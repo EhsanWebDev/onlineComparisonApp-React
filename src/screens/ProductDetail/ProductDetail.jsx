@@ -1,4 +1,4 @@
-import { Grid, makeStyles, Typography, withStyles, createStyles, Button, Paper, Tabs, Tab, LinearProgress, Divider, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Hidden } from '@material-ui/core'
+import { Grid, makeStyles, Typography, withStyles, createStyles, Button, Paper, Tabs, Tab, LinearProgress, Divider, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Hidden, Container } from '@material-ui/core'
 import Rating from '@material-ui/lab/Rating'
 import React, { useState } from 'react'
 import { Carousel } from 'react-responsive-carousel'
@@ -20,7 +20,8 @@ import { useEffect } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import CustomTable from '../../components/Table/CustomTable'
 import Sidebar from '../../components/Sidebar/Sidebar'
-
+import TextWithIconRight from '../../components/TextWithHorizontalIcon/TextWithIconRight'
+import { Compare, BurstMode, Sms } from '@material-ui/icons';
 const StyledRating = withStyles((theme) => ({
     // iconFilled: {
     //     color: "#E58070",
@@ -35,7 +36,7 @@ const StyledRating = withStyles((theme) => ({
 const useStyles = makeStyles((theme) =>
     createStyles({
         specContainer: {
-            margin: "0 0 .6em 2em",
+            margin: "0 0 .6em 0em",
         },
         specText: {
             marginLeft: ".6em",
@@ -51,17 +52,32 @@ const useStyles = makeStyles((theme) =>
         },
         review: {
             // flexBasis: "25%",
+        },
+        CTA_Btn: {
+            transition: ".6s",
+            "&.active": {
+                backgroundColor: theme.palette.primary.main,
+                color: "white",
+                "&:hover": {
+                    backgroundColor: "white",
+                    color: "#000",
+                }
+            },
+            "&:hover": {
+                backgroundColor: theme.palette.primary.main,
+                color: "white"
+            }
         }
 
 
     })
 );
-const ProductDetail = () => {
-    const { specContainer, review, specText, marginTop, marginTopSm, marginTopLg } = useStyles()
-    const [value, setValue] = useState(0);
+const ProductDetail = ({ history }) => {
+    const { specContainer, review, specText, CTA_Btn, marginTop, marginTopSm, marginTopLg } = useStyles()
+    const [value, setValue] = useState(4);
 
     useEffect(() => {
-        // window.scrollTo(0, 0)
+        window.scrollTo(0, 0)
     }, [])
 
     const handleChange = (event, newValue) => {
@@ -76,28 +92,24 @@ const ProductDetail = () => {
         { name: "Status", value: "Available. Released 2021, August 12" },
     ];
     return (
-        <div style={{ margin: '3em 0 18em' }}>
-            <Grid container spacing={2}>
-                <Grid item xs={0} md={3} lg={2}>
-                    <Hidden smDown>
-                        <Sidebar />
-                    </Hidden>
-                </Grid>
+        <div style={{ margin: '4em 0 10em' }}>
+            <Grid container spacing={3}>
+
                 <Grid item md={9} lg={10}>
-                    <Typography variant="h4" component="h4">Product Name</Typography>
-                    <Typography variant="caption">Specifications</Typography>
-                    <Grid container spacing={1} style={{ margin: '2em 0 18em' }} >
+
+                    {/* <Typography variant="caption">Specifications</Typography> */}
+                    <Grid container spacing={4} style={{ margin: '2em 0 18em' }} >
 
                         <Grid item xs={6} md={6}>
                             <LazyLoadImage style={{ width: '100%' }} src="https://i.gadgets360cdn.com/large/nokia_air_conditioner_image_flipkart_1608556296721.jpg" />
                             {/* <CustomCarousel autoPlay={false} showArrows={false} showThumbs={true} /> */}
                         </Grid>
-                        <Grid item xs={6} md={6} >
-
-                            {/* <Grid container direction="row" alignItems="center" className={specContainer}>
-                        <StyledRating precision={0.5} color="primary" readOnly name="half-rating" defaultValue={2.5} size="small" />
-                        <Typography variant="body2" className={specText}>2.5 (99)</Typography>
-                    </Grid> */}
+                        <Grid item xs={6} md={6}  >
+                            <Typography variant="h4" component="h4">Product Name</Typography>
+                            <Grid container direction="row" alignItems="center" className={specContainer}>
+                                <StyledRating precision={0.5} color="primary" readOnly name="half-rating" defaultValue={2.5} size="small" />
+                                <Typography variant="body2" className={specText}>2.5 (99)</Typography>
+                            </Grid>
                             <Grid container>
                                 <Grid container direction="row" alignItems="center" className={specContainer}>
                                     <LineWeightIcon size="small" />
@@ -119,18 +131,41 @@ const ProductDetail = () => {
                                     <SettingsRemoteIcon size="small" />
                                     <Typography variant="body2" className={specText}>Wi-Fi</Typography>
                                 </Grid>
-                                <Grid container direction="row" alignItems="center" className={specContainer}>
+                                {/* <Grid container direction="row" alignItems="center" className={specContainer}>
                                     <Button className={marginTopLg} variant="contained" color="primary">compare</Button>
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                         </Grid>
-                        <CustomTable rows={rows} />
-                        <CustomTable rows={rows} />
-                        <CustomTable rows={rows} />
-                        <CustomTable rows={rows} />
+                        <Hidden mdUp>
+                            <TextWithIconRight onClick={() => history.push("/compare")} />
+                            <TextWithIconRight title="Opinions" IconName={<Sms />} />
+                            <TextWithIconRight title="Pictures" IconName={<BurstMode />} />
+                        </Hidden>
+                        <Hidden smDown>
+
+                            <Container>
+
+                                <Box display="flex" flex={1}>
+                                    <Button className={`${CTA_Btn} active`} onClick={() => history.push("/compare")} variant="outlined"><Compare style={{ marginRight: 4 }} fontSize="small" /> Compare</Button>
+                                    <Button className={CTA_Btn} variant="outlined"><Sms style={{ marginRight: 4 }} fontSize="small" /> Opinions</Button>
+                                    <Button className={CTA_Btn} variant="outlined"> <BurstMode style={{ marginRight: 4 }} fontSize="small" /> Pictures</Button>
+                                </Box>
+                            </Container>
+                        </Hidden>
+
+
+
+                        <Box flex={1} className={marginTopLg}>
+                            <CustomTable rows={rows} />
+                            <CustomTable rows={rows} />
+                            <CustomTable rows={rows} />
+                            <CustomTable rows={rows} />
+                        </Box>
+
+
 
                         <Grid item xs={12} md={12}>
-                            <Paper style={{ marginTop: "4em" }} >
+                            {/* <Paper style={{ marginTop: "4em" }} >
                                 <Tabs
                                     value={value}
                                     indicatorColor="primary"
@@ -143,7 +178,7 @@ const ProductDetail = () => {
                                     <Tab icon={<RateReviewIcon />} label="Reviews" />
 
                                 </Tabs>
-                            </Paper>
+                            </Paper> */}
 
                             {value === 0 && <Typography variant="body2" style={{ padding: '2em 5em 2em .5em', }}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro veritatis, optio asperiores voluptates reiciendis eum, molestiae fuga quia amet commodi suscipit! Pariatur eveniet, at sequi sunt illo laborum non eum commodi maxime, minima similique quasi culpa dignissimos possimus magni perspiciatis.</Typography>}
                             {value === 1 && <Grid container style={{ padding: '2em .5em' }}>
@@ -205,6 +240,11 @@ const ProductDetail = () => {
                             }
                         </Grid>
                     </Grid>
+                </Grid>
+                <Grid item xs={0} md={3} lg={2}>
+                    <Hidden smDown>
+                        <Sidebar />
+                    </Hidden>
                 </Grid>
             </Grid>
 

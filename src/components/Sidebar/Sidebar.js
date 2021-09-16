@@ -25,7 +25,11 @@ const Sidebar = () => {
     }
     return (
         <div className="sidebar">
-            <ul className="sidebar-container">
+            <div style={{ outline: "1px solid red", height: '100vh' }}>
+                Similar products
+            </div>
+
+            {/* <ul className="sidebar-container">
 
                 {sidebarData.map((item) => {
                     const { id, name, expanded, expandedData } = item || {}
@@ -65,8 +69,8 @@ const Sidebar = () => {
                     )
                 })}
 
-            </ul>
-            <img src="https://images.samsung.com/is/image/samsung/assets/in/720x800-AC-PF-Page-Mobile-copy-100.jpg?imwidth=720" alt="side-banner" />
+            </ul> */}
+            {/* <img src="https://images.samsung.com/is/image/samsung/assets/in/720x800-AC-PF-Page-Mobile-copy-100.jpg?imwidth=720" alt="side-banner" /> */}
         </div>
     )
 }
