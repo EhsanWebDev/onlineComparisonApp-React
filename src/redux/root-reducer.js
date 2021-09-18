@@ -3,6 +3,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import cartReducer from './cart/cart.reducer';
+import compareReducer from './compare/compare.reducer';
 
 
 const persistConfig = {
@@ -13,6 +14,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     cart: cartReducer,
+    compare: compareReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

@@ -1,11 +1,13 @@
-import { Divider, Grid, makeStyles, Typography, createStyles, TextField, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Breadcrumbs, Link } from '@material-ui/core'
+import { Divider, Grid, makeStyles, Typography, createStyles, TextField, Box, TableContainer, Breadcrumbs, Link } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { products_data } from '../../data'
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import CompareTable from './components/CompareTable';
-
+import { connect } from 'react-redux';
+import { addCompareItem } from '../../redux/compare/compare.actions';
+import FilterNoneIcon from '@material-ui/icons/FilterNone';
 
 const useStyles = makeStyles((theme) => createStyles({
     marginTop: {
@@ -92,8 +94,20 @@ const product = {
     id: 1, name: 'Gree AC', image: "https://i.gadgets360cdn.com/large/nokia_air_conditioner_image_flipkart_1608556296721.jpg",
     price: 60000
 }
+const AutocompleteStyles = makeStyles(theme => ({
+    endAdornment: {
+        display: 'none'
+    }
+}))
+const Compare = ({ history, compare }) => {
 
-const Compare = ({ history }) => {
+
+    // States
+    const [firstSelected, setFirstSelected] = useState({})
+    const [secondSelected, setSecondSelected] = useState([])
+    const { firstPId, secondPid, rows: compareRows } = compare[0] || {}
+
+
     const {
         marginTop, tableHeader, product_info, table_cell,
         review_title, auto_img, auto_title, auto_brand,
@@ -101,6 +115,10 @@ const Compare = ({ history }) => {
     } = useStyles() || {}
     useEffect(() => {
         window.scrollTo(0, 0)
+        if (firstPId) {
+            const value = products_data.find(item => item.id === firstPId)
+            if (value) setFirstSelected(value)
+        }
     }, [])
     const renderOption = (item, rest) => {
         const { name, brand, image } = item || {}
@@ -116,11 +134,12 @@ const Compare = ({ history }) => {
         )
 
     }
-    const CompareItem = () => {
+    const CompareItem = ({ img, name }) => {
         return (
-            <Grid item xs={4} sm={5} md={4} lg={3}>
-                <Typography variant="h6" style={{ textAlign: 'center', margin: '1em 0', fontSize: '.85rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Gree Ac</Typography>
-                <img src={product.image} style={{ width: '100%' }} />
+            <Grid item xs={4} sm={5} md={4} lg={3} >
+                {name ? <Typography variant="h6" style={{ textAlign: 'center', margin: '1em 0', fontSize: '.85rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</Typography> : <Typography variant="h6" style={{ textAlign: 'center', margin: '1em 0', fontSize: '.85rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Select Product</Typography>}
+
+                {img ? <img src={img} style={{ width: '100%' }} /> : <FilterNoneIcon fontSize="large" color="action" style={{ width: '100%' }} />}
 
             </Grid>
         )
@@ -128,8 +147,25 @@ const Compare = ({ history }) => {
     function handleClick(event) {
         event.preventDefault();
         history.push('/')
-
     }
+    const rows = [
+        {
+            title: 'Announced',
+            first: '2020, September 10',
+            second: '2019, September 10',
+        },
+        {
+            title: 'Announced',
+            first: '2019, September 10',
+            second: '2019, September 10',
+        },
+        {
+            title: 'Announced',
+            first: '2019, September 10',
+            second: '2019, September 10',
+        },
+
+    ]
     return (
         <div style={{ marginTop: "2em" }}>
             <Breadcrumbs aria-label="breadcrumb">
@@ -146,15 +182,22 @@ const Compare = ({ history }) => {
                 <Grid item sm={2} md={4} lg={6} />
                 <Grid item xs={12} sm={5} md={4} lg={3}>
                     <Autocomplete
+                        multiple={false}
                         classes={{ option: input }}
+                        onChange={(event, value) => {
+                            console.log({ value });
+                            setFirstSelected(value)
+                        }}
+
                         id="free-solo-2-demo"
                         renderOption={renderOption}
-
+                        value={firstSelected}
                         options={products_data}
                         getOptionLabel={option => option.name}
-                        filterSelectedOptions
+
                         size="small"
-                        disableClearable
+                        freeSolo
+
                         ListboxProps={
                             {
                                 style: {
@@ -171,7 +214,7 @@ const Compare = ({ history }) => {
                                 placeholder="Search First Product"
                                 size="small"
                                 variant="outlined"
-                                InputProps={{ ...params.InputProps, type: 'search' }}
+                                InputProps={{ ...params.InputProps, }}
                             />
                         )}
                         getOptionSelected={(option, value) => option.id === value.id}
@@ -182,12 +225,13 @@ const Compare = ({ history }) => {
                     <Autocomplete
                         classes={{ option: input }}
                         id="free-solo-2-demo"
+                        freeSolo
                         renderOption={renderOption}
                         options={products_data}
                         getOptionLabel={option => option.name}
                         filterSelectedOptions
                         size="small"
-                        disableClearable
+
                         ListboxProps={
                             {
                                 style: {
@@ -203,7 +247,7 @@ const Compare = ({ history }) => {
                                 placeholder="Search Second Product"
                                 size="small"
                                 variant="outlined"
-                                InputProps={{ ...params.InputProps, type: 'search' }}
+                                InputProps={{ ...params.InputProps, }}
                             />
                         )}
                         getOptionSelected={(option, value) => option.id === value.id}
@@ -214,15 +258,17 @@ const Compare = ({ history }) => {
             <Grid container className={marginTop} alignItems="center" spacing={2}>
                 <Grid item xs={4} sm={2} md={4} lg={6}>
                 </Grid>
-                <CompareItem />
+                <CompareItem img={firstSelected && firstSelected.image} name={firstSelected && firstSelected.name} />
                 <CompareItem />
             </Grid>
             <Grid container>
                 <Grid item xs={12} md={12} className={marginTop}>
-                    <CompareTable />
-                    <CompareTable />
+                    {rows.map((item, index) => (
+                        <CompareTable key={index} title={item.title} first={item.first} second={item.second} />
+                    ))}
                 </Grid>
-                {/* <Grid item xs={12} md={12} className={marginTop}>
+                <div>
+                    {/* <Grid item xs={12} md={12} className={marginTop}>
                     <TableContainer component={Paper}>
                         <Table aria-label="simple table">
                             <TableHead >
@@ -326,10 +372,20 @@ const Compare = ({ history }) => {
                         </Table>
                     </TableContainer>
                 </Grid> */}
+                </div>
+
             </Grid>
         </div>
     )
 }
 
+const mapStateToProps = ({ compare }) => ({
+    compare: compare.compareItems
+})
 
-export default Compare
+const mapDispatchToProps = dispatch => ({
+    addCompareItem: item => dispatch(addCompareItem(item)),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Compare)

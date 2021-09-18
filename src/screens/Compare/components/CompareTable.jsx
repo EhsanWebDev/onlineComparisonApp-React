@@ -1,5 +1,5 @@
 import {
-    Container, makeStyles, Paper, Table,
+    makeStyles, Paper, Table,
     TableBody, TableCell, TableContainer, TableHead, TableRow, createStyles, Typography
 } from "@material-ui/core"
 
@@ -82,9 +82,9 @@ const useStyles = makeStyles((theme) => createStyles({
 }))
 const CompareTable = ({ title = "Announced", first = "2019, September 10", second = "2019, September 10" }) => {
     const {
-        marginTop, tableHeader, product_info, table_cell,
-        review_title, auto_img, auto_title, auto_brand,
-        input
+        tableHeader, product_info, table_cell,
+        review_title,
+
     } = useStyles() || {}
     return (
         <TableContainer component={Paper} style={{ marginBottom: '1.1em' }}>

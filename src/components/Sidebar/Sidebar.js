@@ -3,7 +3,8 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { sidebar_data } from "../../data";
 import { Fragment, useState } from "react";
-
+import { Grid, Typography } from "@material-ui/core";
+import SimilarProduct from "../SimilerProduct/SimilerProduct";
 const Sidebar = () => {
     const [sidebarData, setSidebarData] = useState(sidebar_data)
     const handleClick = (id) => {
@@ -24,9 +25,17 @@ const Sidebar = () => {
         setSidebarData(updatedData)
     }
     return (
-        <div className="sidebar">
-            <div style={{ outline: "1px solid red", height: '100vh' }}>
-                Similar products
+        <div className="sidebar" style={{
+            margin: '3em 0 0', backgroundColor: '#eeeeee', height: '100vh', padding: '1em .5em', borderRadius: 6
+        }}>
+            <Typography variant="h6">
+                Similar Products
+            </Typography>
+            <div style={{ margin: '1em 0 0', }}>
+                <SimilarProduct />
+                <SimilarProduct />
+                <SimilarProduct />
+                <SimilarProduct />
             </div>
 
             {/* <ul className="sidebar-container">

@@ -1,19 +1,13 @@
-import { Grid, makeStyles, Typography, withStyles, createStyles, Button, Paper, Tabs, Tab, LinearProgress, Divider, Box, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Hidden, Container } from '@material-ui/core'
+import { Grid, makeStyles, Typography, withStyles, createStyles, Button, Box, Hidden, Container } from '@material-ui/core'
 import Rating from '@material-ui/lab/Rating'
 import React, { useState } from 'react'
-import { Carousel } from 'react-responsive-carousel'
-import CustomCarousel from '../../components/Carousel/CustomCarousel'
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+
 import LineWeightIcon from '@material-ui/icons/LineWeight';
 import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
 import MicOffIcon from '@material-ui/icons/MicOff';
 import SettingsRemoteIcon from '@material-ui/icons/SettingsRemote';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import DescriptionIcon from '@material-ui/icons/Description';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-import RateReviewIcon from '@material-ui/icons/RateReview';
+
 import ProgressBar from '../../components/ProgressBar'
 import Review from '../../components/Reviews/Review'
 import { useEffect } from 'react'
@@ -22,6 +16,8 @@ import CustomTable from '../../components/Table/CustomTable'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import TextWithIconRight from '../../components/TextWithHorizontalIcon/TextWithIconRight'
 import { Compare, BurstMode, Sms } from '@material-ui/icons';
+import { connect } from 'react-redux';
+import { addCompareItem } from '../../redux/compare/compare.actions';
 const StyledRating = withStyles((theme) => ({
     // iconFilled: {
     //     color: "#E58070",
@@ -72,30 +68,37 @@ const useStyles = makeStyles((theme) =>
 
     })
 );
-const ProductDetail = ({ history }) => {
-    const { specContainer, review, specText, CTA_Btn, marginTop, marginTopSm, marginTopLg } = useStyles()
+const ProductDetail = ({ history, compare, addCompareItem, match }) => {
+    const { specContainer, review, specText, CTA_Btn, marginTopSm, marginTopLg } = useStyles()
     const [value, setValue] = useState(4);
+
+    console.log({ compare, })
 
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
-    }
-
     const rows = [
         { name: "Announced", value: "2021, August 12" },
         { name: "Status", value: "Available. Released 2021, August 12" },
     ];
+    const handleCompare = () => {
+        const { params: { id } } = match || {}
+        const item = rows.map(i => {
+            return {
+                title: i.name,
+                first: i.value,
+                second: ""
+            }
+        })
+        addCompareItem({ firstPId: Number(id), secondPId: 0, rows: item })
+        history.push("/compare")
+    }
     return (
         <div style={{ margin: '4em 0 10em' }}>
             <Grid container spacing={3}>
 
-                <Grid item md={9} lg={10}>
+                <Grid item md={9} lg={9}>
 
                     {/* <Typography variant="caption">Specifications</Typography> */}
                     <Grid container spacing={4} style={{ margin: '2em 0 18em' }} >
@@ -137,7 +140,7 @@ const ProductDetail = ({ history }) => {
                             </Grid>
                         </Grid>
                         <Hidden mdUp>
-                            <TextWithIconRight onClick={() => history.push("/compare")} />
+                            <TextWithIconRight onClick={handleCompare} />
                             <TextWithIconRight title="Opinions" IconName={<Sms />} />
                             <TextWithIconRight title="Pictures" IconName={<BurstMode />} />
                         </Hidden>
@@ -241,7 +244,7 @@ const ProductDetail = ({ history }) => {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={0} md={3} lg={2}>
+                <Grid item md={3} lg={3}>
                     <Hidden smDown>
                         <Sidebar />
                     </Hidden>
@@ -253,4 +256,13 @@ const ProductDetail = ({ history }) => {
     )
 }
 
-export default ProductDetail
+const mapStateToProps = ({ compare }) => ({
+    compare: compare.compareItems
+})
+
+const mapDispatchToProps = dispatch => ({
+    addCompareItem: item => dispatch(addCompareItem(item)),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail)

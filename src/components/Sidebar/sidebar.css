@@ -7,10 +7,10 @@
   justify-content: space-between;
   padding: 1em 0.1em 0.8em 0;
 }
-.sidebar img {
+/* .sidebar img {
   margin-top: 2em;
   width: 100%;
-}
+} */
 .sidebar-flex > p {
   text-transform: uppercase;
   cursor: pointer;
