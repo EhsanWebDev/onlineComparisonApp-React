@@ -11,7 +11,7 @@ const compareReducer = (state = INITIAL_STATE, action) => {
         case CartActionTypes.ADD_COMPARE_ITEM:
             return {
                 ...state,
-                compareItems: [...state.compareItems, action.payload]
+                compareItems: [action.payload]
             };
         // case CartActionTypes.REMOVE_ITEM:
         //     return {

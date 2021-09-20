@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => createStyles({
 
     }
 }))
-const CompareTable = ({ title = "Announced", first = "2019, September 10", second = "2019, September 10" }) => {
+const CompareTable = ({ rows = [], mainTitle = "Compare" }) => {
     const {
         tableHeader, product_info, table_cell,
         review_title,
@@ -91,21 +91,24 @@ const CompareTable = ({ title = "Announced", first = "2019, September 10", secon
             <Table aria-label="simple table">
                 <TableHead >
                     <TableRow >
-                        <TableCell colSpan="4" className={tableHeader}>Launch</TableCell>
+                        <TableCell colSpan="4" className={tableHeader}>{mainTitle}</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    <TableRow>
-                        <TableCell size="small">
-                            <Typography variant="subtitle2" className={review_title} >{title}</Typography>
-                        </TableCell>
-                        <TableCell size="small" className={table_cell}>
-                            <Typography variant="caption" className={product_info}>{first}</Typography>
-                        </TableCell>
-                        <TableCell size="small" className={table_cell}>
-                            <Typography variant="caption" className={product_info}>{second}</Typography>
-                        </TableCell>
-                    </TableRow>
+                    {rows.map((row) => (
+                        <TableRow>
+                            <TableCell size="small">
+                                <Typography variant="subtitle2" className={review_title} >{row.title}</Typography>
+                            </TableCell>
+                            <TableCell size="small" className={table_cell}>
+                                <Typography variant="caption" className={product_info}>{row.first}</Typography>
+                            </TableCell>
+                            <TableCell size="small" className={table_cell}>
+                                <Typography variant="caption" className={product_info}>{row.second}</Typography>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+
                 </TableBody>
             </Table>
         </TableContainer>

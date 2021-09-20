@@ -43,7 +43,11 @@ export const products_data = [
         name: "Gree 606 6 ",
         price: 42999,
         brand: "Gree",
-        image: "https://i.gadgets360cdn.com/large/nokia_air_conditioner_image_flipkart_1608556296721.jpg"
+        image: "https://i.gadgets360cdn.com/large/nokia_air_conditioner_image_flipkart_1608556296721.jpg",
+        rows: [
+            { title: "Launch", name: "Announced", value: "2021, August 12" },
+            { title: "Specs", name: "Status", value: "Available." },
+        ]
     },
     {
         id: 2,
@@ -51,6 +55,11 @@ export const products_data = [
         price: 42999,
         brand: "ORIENT",
         image: "https://image.shutterstock.com/image-vector/white-air-condition-isolated-on-260nw-758762737.jpg"
+        ,
+        rows: [
+            { title: "Launch", name: "Announced", value: "2019, August 13" },
+            { title: "Specs", name: "Status", value: "Available." },
+        ]
     },
     {
         id: 3,

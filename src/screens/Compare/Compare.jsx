@@ -1,5 +1,5 @@
-import { Divider, Grid, makeStyles, Typography, createStyles, TextField, Box, TableContainer, Breadcrumbs, Link } from '@material-ui/core'
-import { Autocomplete } from '@material-ui/lab';
+import { Divider, Grid, makeStyles, Typography, createStyles, TextField, Box, TableContainer, Breadcrumbs, Link, Snackbar } from '@material-ui/core'
+import { Alert, Autocomplete } from '@material-ui/lab';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { products_data } from '../../data'
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -99,13 +99,13 @@ const AutocompleteStyles = makeStyles(theme => ({
         display: 'none'
     }
 }))
-const Compare = ({ history, compare }) => {
+const Compare = ({ history, compare, addCompareItem }) => {
 
 
     // States
     const [firstSelected, setFirstSelected] = useState({})
-    const [secondSelected, setSecondSelected] = useState([])
-    const { firstPId, secondPid, rows: compareRows } = compare[0] || {}
+    const [secondSelected, setSecondSelected] = useState({})
+    const { firstPId, secondPId, rows: compareRows } = compare[0] || {}
 
 
     const {
@@ -120,6 +120,8 @@ const Compare = ({ history, compare }) => {
             if (value) setFirstSelected(value)
         }
     }, [])
+
+    console.log({ compare })
     const renderOption = (item, rest) => {
         const { name, brand, image } = item || {}
         const { selected } = rest || {}
@@ -151,7 +153,7 @@ const Compare = ({ history, compare }) => {
     const rows = [
         {
             title: 'Announced',
-            first: '2020, September 10',
+            first: '2019, September 10',
             second: '2019, September 10',
         },
         {
@@ -166,8 +168,59 @@ const Compare = ({ history, compare }) => {
         },
 
     ]
+    const [open, setOpen] = useState(false);
+    const handleClose = (event, reason) => {
+        setOpen(false);
+    };
+
+    const handleChange = (item, isFirst) => {
+        const { id, rows } = item || {}
+        let newData = []
+        if (compareRows) {
+            newData = (compareRows || []).map((row, index) => {
+                if (isFirst) {
+                    return {
+                        ...row,
+                        first: rows[index].value,
+                    }
+                }
+                return {
+                    ...row,
+                    second: rows[index].value,
+                }
+
+            })
+        }
+        if (!compareRows) {
+            newData = (rows || []).map(itemRow => {
+                if (isFirst) {
+                    return {
+                        title: itemRow.name,
+                        first: itemRow.value,
+                        second: ""
+                    }
+                }
+                return {
+                    title: itemRow.name,
+                    second: itemRow.value,
+                    first: ""
+                }
+            })
+        }
+        if (isFirst) {
+            addCompareItem({ ...compare[0], firstPId: id, rows: newData })
+            return
+        }
+
+        addCompareItem({ ...compare[0], secondPId: id, rows: newData })
+    }
     return (
         <div style={{ marginTop: "2em" }}>
+            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error">
+                    This A.C is already selected. Please select a different A.C
+                </Alert>
+            </Snackbar>
             <Breadcrumbs aria-label="breadcrumb">
                 <Link color="inherit" href="/" onClick={handleClick}>
                     Home
@@ -185,7 +238,27 @@ const Compare = ({ history, compare }) => {
                         multiple={false}
                         classes={{ option: input }}
                         onChange={(event, value) => {
-                            console.log({ value });
+                            if (!value) {
+                                setFirstSelected({ name: "", image: null })
+                                let newData = (compareRows || []).map((row, index) => {
+
+                                    return {
+                                        ...row,
+                                        first: "",
+                                    }
+
+                                })
+                                addCompareItem({ ...compare[0], firstPId: "", rows: newData })
+                                return
+                            }
+                            const { id } = value || {}
+                            if (id === secondSelected.id) {
+                                setOpen(true)
+                                return
+                            }
+
+                            // addCompareItem({ firstPId: id, })
+                            handleChange(value, true)
                             setFirstSelected(value)
                         }}
 
@@ -194,7 +267,7 @@ const Compare = ({ history, compare }) => {
                         value={firstSelected}
                         options={products_data}
                         getOptionLabel={option => option.name}
-
+                        filterSelectedOptions
                         size="small"
                         freeSolo
 
@@ -231,7 +304,30 @@ const Compare = ({ history, compare }) => {
                         getOptionLabel={option => option.name}
                         filterSelectedOptions
                         size="small"
+                        onChange={(event, value) => {
+                            if (!value) {
+                                setSecondSelected({ name: "", image: null })
+                                let newData = (compareRows || []).map((row, index) => {
 
+                                    return {
+                                        ...row,
+                                        second: "",
+                                    }
+
+                                })
+                                addCompareItem({ ...compare[0], secondPId: "", rows: newData })
+                                return
+                            }
+                            const { id, rows } = value || {}
+
+                            if (id === firstSelected.id) {
+                                setOpen(true)
+                                return
+                            }
+                            handleChange(value, false)
+
+                            setSecondSelected(value)
+                        }}
                         ListboxProps={
                             {
                                 style: {
@@ -255,16 +351,17 @@ const Compare = ({ history, compare }) => {
                 </Grid>
             </Grid>
 
+
             <Grid container className={marginTop} alignItems="center" spacing={2}>
                 <Grid item xs={4} sm={2} md={4} lg={6}>
                 </Grid>
                 <CompareItem img={firstSelected && firstSelected.image} name={firstSelected && firstSelected.name} />
-                <CompareItem />
+                <CompareItem img={secondSelected && secondSelected.image} name={secondSelected && secondSelected.name} />
             </Grid>
             <Grid container>
-                <Grid item xs={12} md={12} className={marginTop}>
-                    {rows.map((item, index) => (
-                        <CompareTable key={index} title={item.title} first={item.first} second={item.second} />
+                <Grid item xs={12} md={12} className={marginTop} style={{ marginBottom: !(firstPId && secondPId) ? 200 : 0 }} >
+                    {(firstPId || secondPId) && (compareRows || []).map((item, index) => (
+                        <CompareTable key={index} rows={compareRows} />
                     ))}
                 </Grid>
                 <div>

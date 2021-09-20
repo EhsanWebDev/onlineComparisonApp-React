@@ -72,8 +72,6 @@ const ProductDetail = ({ history, compare, addCompareItem, match }) => {
     const { specContainer, review, specText, CTA_Btn, marginTopSm, marginTopLg } = useStyles()
     const [value, setValue] = useState(4);
 
-    console.log({ compare, })
-
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
@@ -149,7 +147,7 @@ const ProductDetail = ({ history, compare, addCompareItem, match }) => {
                             <Container>
 
                                 <Box display="flex" flex={1}>
-                                    <Button className={`${CTA_Btn} active`} onClick={() => history.push("/compare")} variant="outlined"><Compare style={{ marginRight: 4 }} fontSize="small" /> Compare</Button>
+                                    <Button className={`${CTA_Btn} active`} onClick={handleCompare} variant="outlined"><Compare style={{ marginRight: 4 }} fontSize="small" /> Compare</Button>
                                     <Button className={CTA_Btn} variant="outlined"><Sms style={{ marginRight: 4 }} fontSize="small" /> Opinions</Button>
                                     <Button className={CTA_Btn} variant="outlined"> <BurstMode style={{ marginRight: 4 }} fontSize="small" /> Pictures</Button>
                                 </Box>

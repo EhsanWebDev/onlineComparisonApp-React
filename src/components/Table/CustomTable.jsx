@@ -21,7 +21,6 @@ const CustomTable = ({ rows = [], title = "Launch" }) => {
                     <TableHead>
                         <TableRow>
                             <TableCell size="small" colSpan="2">
-
                                 <Typography className={table_heading}>
                                     {title}
                                 </Typography>
