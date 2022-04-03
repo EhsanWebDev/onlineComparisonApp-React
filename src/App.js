@@ -6,6 +6,7 @@ import './App.css';
 import Footer from './components/Footer/Footer';
 import Navbar from './components/Navbar/Navbar';
 import TopBar from './components/Topbar/Topbar';
+import CreateProducts from './screens/Admin/Products/CreateProducts';
 import Checkout from './screens/Checkout/Checkout';
 import Compare from './screens/Compare/Compare';
 import ContactUs from './screens/ContactUs/ContactUs';
@@ -47,6 +48,7 @@ function App() {
               <Route path='/compare' component={Compare} />
               <Route path='/contact-us' component={ContactUs} />
               <Route path='/product-details/:id' component={ProductDetail} />
+              <Route path="/create_product" component={CreateProducts} />
               <Route path="/" component={Home} />
             </Switch>
           </Container>

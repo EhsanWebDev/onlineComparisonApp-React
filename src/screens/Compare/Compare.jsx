@@ -120,8 +120,6 @@ const Compare = ({ history, compare, addCompareItem }) => {
             if (value) setFirstSelected(value)
         }
     }, [])
-
-    console.log({ compare })
     const renderOption = (item, rest) => {
         const { name, brand, image } = item || {}
         const { selected } = rest || {}
