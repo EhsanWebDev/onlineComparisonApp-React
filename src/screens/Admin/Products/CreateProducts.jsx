@@ -1,10 +1,12 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Divider, Grid, makeStyles, Typography, createStyles, TextField, Box, TableContainer, Breadcrumbs, Link, Snackbar } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
 import { products_data } from '../../../data'
 import 'date-fns';
 import Button from '../../../components/Button/Button';
+import { useDispatch } from 'react-redux';
+import { get_all_brands } from './redux/actions';
 
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -92,8 +94,17 @@ const useStyles = makeStyles((theme) => createStyles({
 
 const CreateProducts = () => {
 
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(get_all_brands())
+    }, [])
+
+
     const [firstSelected, setFirstSelected] = useState({})
     const [selectedDate, setSelectedDate] = useState(new Date());
+
+    const [brands, setBrands] = useState([])
+    const [categories, setCategories] = useState([])
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
