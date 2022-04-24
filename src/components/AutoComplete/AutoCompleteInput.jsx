@@ -11,6 +11,7 @@ const AutoCompleteInput = ({
                 <div className="relative mt-1">
                     <div className="relative w-full text-left  cursor-default ">
                         <Combobox.Input
+                            autoComplete='off'
                             className="w-full outline-none border border-gray-400   py-2 rounded pl-3 text-sm leading-5 text-gray-900  focus:ring-2 focus:ring-blue-700 focus:border-transparent"
                             displayValue={(person) => person.name}
                             onChange={(event) => setQuery(event.target.value)}

@@ -10,8 +10,6 @@ const create = (headers, baseURL = BASE_URL) => {
             headers: headers,
             timeout: 50000
         })
-
-
     api.interceptors.response.use(function (response) {
         // if received status code 200-299, this function will trigger
         return response;

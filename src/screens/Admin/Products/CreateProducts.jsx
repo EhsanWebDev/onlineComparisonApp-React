@@ -1,12 +1,14 @@
 
-import React, { useEffect, useState, } from 'react'
+import React, { Fragment, useEffect, useState, } from 'react'
 import { useDispatch } from 'react-redux';
-import { get_all_brands, get_all_Categories, get_all_product_types } from './redux/actions';
+import { create_product, get_all_brands, get_all_Categories, get_all_product_types } from './redux/actions';
 import Loader from '../../../components/loader/Loader';
 import AutoCompleteInput from '../../../components/AutoComplete/AutoCompleteInput';
 import * as Yup from 'yup';
 import { Formik, Form, } from 'formik';
 import InputField from '../../../components/Field/InputField';
+import { Snackbar } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 
 const productCreationSchema = Yup.object().shape({
     productName: Yup.string()
@@ -21,7 +23,11 @@ const productCreationSchema = Yup.object().shape({
     price_to: Yup.string().required('*Required'),
     model_name: Yup.string().min(5, 'Too Short!')
         .max(50, 'Too Long!').required('*Required'),
-    model_date: Yup.string().required('*Required'),
+    model_date: Yup.date().required('*Required'),
+    // product_brand: Yup.string().required('*Required'),
+    // product_category: Yup.string().required('*Required'),
+    // product_type: Yup.string().required('*Required'),
+
 });
 
 
@@ -31,6 +37,14 @@ const CreateProducts = () => {
     const dispatch = useDispatch()
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [loading, setLoading] = useState(true)
+    const [productLoading, setProductLoading] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [severity, setSeverity] = useState("success")
+    const [alertMsg, setAlertMsg] = useState("Product Added Successfully!")
+
+
+    // Is product Active?
+    const [prodActive, setProdActive] = useState("")
 
     // ProductBrand
     const [selectedBrand, setSelectedBrand] = useState()
@@ -46,6 +60,9 @@ const CreateProducts = () => {
     const [productTypes, setProductTypes] = useState([])
     const [selectedProductTypes, setSelectedProductTypes] = useState()
     const [productTypesQuery, setProductTypesQuery] = useState('')
+
+    // Product Image
+    const [productImg, setProductImg] = useState("")
 
     const filteredBrands =
         brandsQuery === ''
@@ -102,24 +119,30 @@ const CreateProducts = () => {
         dispatch(get_all_product_types(productTypePayload))
     }, [])
 
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
+
+    const handleClose = (event, reason) => {
+        setOpen(false);
     };
 
 
-    if (loading || !brands) {
+    if (loading) {
         return (
             <div className='flex justify-center items-center mt-20'>
-                <Loader />
+                <Loader color={"text-red-800"} />
             </div>
         )
     }
+    console.log({ productImg })
     return (
         <div className='mt-8'>
 
             <h2 className='text-2xl font-bold underline md:text-center'>Create a New Product</h2>
             <div className='max-w-3xl md:max-w-xl md:flex md:items-center md:justify-center md:mx-auto'>
-
+                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert variant="filled" onClose={handleClose} severity={severity}>
+                        {alertMsg}
+                    </Alert>
+                </Snackbar>
                 <Formik
                     initialValues={{
                         productName: '',
@@ -128,11 +151,50 @@ const CreateProducts = () => {
                         price_to: '',
                         model_name: '',
                         model_date: '',
+                        product_type: "",
+                        product_category: "",
+                        product_brand: "",
                     }}
                     validationSchema={productCreationSchema}
                     onSubmit={values => {
-                        // same shape as initial values
-                        console.log(values);
+                        if (productImg === "") {
+                            alert("Please select at least one image of a product")
+                            return
+                        }
+                        const { productName, prod_desc, price_from, price_to, model_date, model_name, } = values || {}
+
+                        const productPayload = {
+                            data: {
+                                productId: "01",
+                                name: productName,
+                                description: prod_desc,
+                                brandId: selectedBrand?.brandId,
+                                typeId: selectedProductTypes?.categoryId,
+                                categoryId: selectedCategory?.categoryId,
+                                priceFrom: price_from,
+                                priceTo: price_to,
+                                modelName: model_name,
+                                modelYear: model_date,
+                                active: prodActive,
+                                file: productImg
+                            },
+                            onSuccess: () => {
+                                setProductLoading(false)
+                                setOpen(true)
+                                setAlertMsg(`Product added successfully!`)
+                                setSeverity("success")
+                            },
+                            onError: (error) => {
+                                console.log({ error })
+                                const { status } = error || {}
+                                setProductLoading(false)
+                                setOpen(true)
+                                setAlertMsg(`Error occurred. Status:${status}`)
+                                setSeverity("error")
+                            }
+                        }
+                        setProductLoading(true)
+                        dispatch(create_product(productPayload))
                     }}
                 >
                     {({ errors, touched, initialErrors, handleChange, handleBlur, values }) => (
@@ -162,15 +224,18 @@ const CreateProducts = () => {
                             />
 
                             <AutoCompleteInput
+                                autocomplete="off"
                                 selected={selectedBrand} setSelected={setSelectedBrand} data={filteredBrands} query={brandsQuery} setQuery={setBrandsQuery} placeholder="Select Brand Name"
                             />
                             <AutoCompleteInput
+                                autocomplete="off"
                                 selected={selectedCategory} setSelected={setSelectedCategory} data={filteredCategories}
                                 query={categoriesQuery}
                                 setQuery={setCategoriesQuery}
                                 placeholder="Select Category Name"
                             />
                             <AutoCompleteInput
+                                autocomplete="off"
                                 selected={selectedProductTypes}
                                 setSelected={setSelectedProductTypes}
                                 data={filteredProductTypes}
@@ -230,9 +295,54 @@ const CreateProducts = () => {
                                         errors.model_date : null
                                 }
                             />
+                            <div className='flex flex-row items-center justify-between'>
+                                <h6 className='text-sm'>Product Active?</h6>
+                                <div >
+                                    <fieldset id="group1" className='flex flex-row items-center space-x-3'>
+                                        <div className='flex flex-col items-center'>
+                                            <label className='text-sm' htmlFor="yes">Yes</label>
+                                            <input type="radio" value="1" name="group1" onClick={(e) => setProdActive(e.target.value)} />
+                                        </div>
+                                        <div className='flex flex-col items-center'>
+                                            <label className='text-sm' htmlFor="no">No</label>
+                                            <input type="radio" value="0" name="group1" onClick={(e) => setProdActive(e.target.value)} />
+                                        </div>
+
+                                    </fieldset>
+                                </div>
 
 
-                            <button type="submit" className='bg-red-800 w-full mt-2 text-white py-2 rounded transition-all duration-500 hover:bg-red-700'>Add Product</button>
+                            </div>
+
+                            <InputField
+                                label='Select image'
+                                type={"file"}
+                                onChange={(e) => {
+                                    const { target } = e || {}
+                                    const { files } = target || {}
+                                    const file = files[0]
+
+                                    if (file?.size > 2000000) {
+                                        alert("File size should be less than 2MB")
+                                        return
+                                    }
+
+                                    if (file)
+                                        setProductImg(file)
+
+                                }}
+                                // value={productImg}
+                                name="product_img"
+                                accept=".jpg,.png,.gif"
+
+                            />
+
+
+
+                            <button type="submit" className='bg-red-800 text-sm bold w-full items-center justify-center flex mt-2 text-white py-2 rounded transition-all duration-500 hover:bg-red-700' disabled={productLoading}>
+                                {productLoading ? <Loader color="text-white" /> : "Add product"}
+
+                            </button>
                         </Form>
                     )}
                 </Formik>
