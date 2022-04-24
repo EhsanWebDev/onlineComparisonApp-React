@@ -9,3 +9,5 @@ export const GET_ALL_PRODUCT_TYPES = `${BASE_URL}Type/GetTypes`
 
 // product
 export const CREATE_NEW_PRODUCT = `${BASE_URL}Product/AddProduct`
+export const GET_ALL_PRODUCTS = `${BASE_URL}Product/GetProducts`
+

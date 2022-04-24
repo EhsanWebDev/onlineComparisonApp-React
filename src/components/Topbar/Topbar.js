@@ -26,7 +26,7 @@ const TopBar = ({ location }) => {
                     <Link to="/">Air Conditioner</Link>
                 </li>
                 <li>
-                    <Link to="/create_product">Reviews</Link>
+                    <Link to="/create_product">Create Product</Link>
                 </li>
                 <li>
                     <Link className={!!matchPath(

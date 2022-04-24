@@ -8,11 +8,38 @@ import { Carousel } from "react-responsive-carousel";
 import { Grid } from "@material-ui/core";
 import ViewListIcon from '@material-ui/icons/ViewList';
 import GridOnIcon from '@material-ui/icons/GridOn';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { useDispatch } from "react-redux";
+import { get_all_products } from "./redux/actions";
+import Loader from "../../components/loader/Loader";
+
 const Home = () => {
     const [gridView, setGridView] = useState(true)
+    const [products, setProducts] = useState([])
+    const dispatch = useDispatch()
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+
+        const payload = {
+            onSuccess: (data) => {
+                setLoading(false)
+                setProducts(data)
+            },
+            onError: (data) => {
+                setLoading(false)
+
+            },
+        }
+        setLoading(true)
+        dispatch(get_all_products(payload))
+
+    }, [])
+
+
+
     const renderItem = (item, rest) => {
         return (
             <div style={{ maxHeight: 650, }}>
@@ -29,6 +56,8 @@ const Home = () => {
             </div>
         )
     }
+
+
     return (
         <>
             <Grid container spacing={2}>
@@ -63,7 +92,11 @@ const Home = () => {
 
                             </div>
                         </div>
-                        <ProductsGrid DATA={products_data} gridView={gridView} />
+
+                        {loading ? (<div className='flex justify-center items-center mt-20'>
+                            <Loader color={"text-red-800"} />
+                        </div>) : <ProductsGrid DATA={products} gridView={gridView} />}
+
                     </div>
                 </Grid>
 

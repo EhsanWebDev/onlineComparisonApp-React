@@ -169,7 +169,14 @@ const Navbar = ({ handleDarkMode, cartItems, history, location }) => {
                                                 <Link to="/">Air Conditioner</Link>
                                             </li>
                                             <li>
-                                                <Link to="/">Reviews</Link>
+                                                <Link
+                                                    className={!!matchPath(
+                                                        location.pathname,
+                                                        '/create_product'
+                                                    ) && "active"} onClick={() => {
+                                                        handleToggle()
+                                                    }}
+                                                    to="/create_product">Create Product</Link>
                                             </li>
                                             <li>
                                                 <Link className={!!matchPath(

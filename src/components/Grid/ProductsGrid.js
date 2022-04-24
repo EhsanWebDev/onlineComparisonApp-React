@@ -41,11 +41,14 @@ const useStyles = props => makeStyles((theme) => {
 const ProductsGrid = ({ DATA = [], gridView = true, addItem, history }) => {
 
     const { card, btn, root } = useStyles(gridView)() || {};
+
+    console.log({ DATA })
+
     return (
         <Grid
             container className={root} spacing={2} >
             {DATA.map((product, index) => {
-                const { id, name, image, price, brand } = product || {}
+                const { id, name, productImageUrl, priceFrom, brand } = product || {}
                 return (
                     <Grid key={id} item xs={12} sm={gridView ? 6 : 12} md={gridView ? 4 : 12} lg={gridView ? 3 : 6}>
                         <Card className={card}>
@@ -53,17 +56,17 @@ const ProductsGrid = ({ DATA = [], gridView = true, addItem, history }) => {
                                 <LazyLoadImage delayMethod="debounce"
                                     alt={"alt"}
                                     effect="blur"
-                                    src={image}
+                                    src={productImageUrl || "./noImg.png"}
+                                    className="rounded-sm max-h-40 max-w-xs md:max-h-64 lg:max-h-90 lg:w-full"
                                     style={{
-                                        width: "clamp(60%,80%,100%)",
-                                        borderRadius: 6,
+                                        borderRadius: 4,
                                     }} />
                             </div>
 
                             <div className="product-info">
 
                                 <p onClick={() => history.push(`/product-details/${id}`)} className="product-name">{name}</p>
-                                <p className="product-price">Rs {price}</p>
+                                <p className="product-price">Rs {priceFrom}</p>
 
                                 <p className="product-brand">
                                     {brand}

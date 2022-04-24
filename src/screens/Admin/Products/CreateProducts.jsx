@@ -156,7 +156,7 @@ const CreateProducts = () => {
                         product_brand: "",
                     }}
                     validationSchema={productCreationSchema}
-                    onSubmit={values => {
+                    onSubmit={(values, { resetForm }) => {
                         if (productImg === "") {
                             alert("Please select at least one image of a product")
                             return
@@ -183,9 +183,9 @@ const CreateProducts = () => {
                                 setOpen(true)
                                 setAlertMsg(`Product added successfully!`)
                                 setSeverity("success")
+                                resetForm()
                             },
                             onError: (error) => {
-                                console.log({ error })
                                 const { status } = error || {}
                                 setProductLoading(false)
                                 setOpen(true)
@@ -243,7 +243,7 @@ const CreateProducts = () => {
                             />
 
 
-                            <div className='flex space-x-4'>
+                            <div className='flex space-x-4 '>
                                 <InputField
                                     onChange={handleChange("price_from")}
                                     onBlur={handleBlur}
